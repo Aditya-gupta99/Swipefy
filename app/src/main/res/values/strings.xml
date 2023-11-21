@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Swipefy</string>
+
+    <string name="hey_there">Hey there,</string>
+    <string name="create_an_account">Create an Account</string>
+    <string name="hide_password">Hide password</string>
+    <string name="show_password">Show password</string>
+    <string name="already_have_account">Already have an account ?</string>
+    <string name="login">login</string>
 </resources>
