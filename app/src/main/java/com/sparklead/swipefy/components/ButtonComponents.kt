@@ -16,6 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sparklead.swipefy.ui.theme.DarkGreen
+import com.sparklead.swipefy.ui.theme.LightGreen
 import com.sparklead.swipefy.ui.theme.Purple40
 
 @Composable
@@ -33,7 +35,7 @@ fun GradiantButton(value: String) {
                 .fillMaxWidth()
                 .heightIn(48.dp)
                 .background(
-                    brush = Brush.horizontalGradient(listOf(Color.Blue, Purple40)),
+                    brush = Brush.horizontalGradient(listOf(DarkGreen, LightGreen)),
                     shape = RoundedCornerShape(50.dp)
                 ),
             contentAlignment = Alignment.Center,
