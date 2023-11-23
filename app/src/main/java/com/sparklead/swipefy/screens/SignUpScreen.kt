@@ -20,6 +20,7 @@ import com.sparklead.swipefy.components.HeadingTextView
 import com.sparklead.swipefy.components.NormalEditTextView
 import com.sparklead.swipefy.components.NormalTextView
 import com.sparklead.swipefy.components.PasswordTextView
+import com.sparklead.swipefy.ui.theme.AppBlack
 
 @Composable
 fun SignUpScreen() {
@@ -27,10 +28,11 @@ fun SignUpScreen() {
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .padding(18.dp)
+            .padding(18.dp),
+        color = AppBlack
     ) {
         Column {
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             NormalTextView(value = stringResource(id = R.string.hey_there))
             Spacer(modifier = Modifier.height(6.dp))
             HeadingTextView(value = stringResource(id = R.string.create_an_account))

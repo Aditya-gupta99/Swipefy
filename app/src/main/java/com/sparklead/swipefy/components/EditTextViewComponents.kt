@@ -22,13 +22,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sparklead.swipefy.R
-import com.sparklead.swipefy.ui.theme.Black
+import com.sparklead.swipefy.ui.theme.DarkGrey
 import com.sparklead.swipefy.ui.theme.Grey
 
 @Composable
@@ -45,17 +47,22 @@ fun NormalEditTextView(labelValue: String, painterResources: Painter) {
             textValue.value = it
         },
         textStyle = TextStyle(
-            fontSize = 20.sp
+            fontSize = 18.sp,
+            fontFamily = FontFamily(Font(R.font.outfit_regular))
         ),
         leadingIcon = {
-            Icon(painter = painterResources, contentDescription = "textImageIcon", tint = Black)
+            Icon(
+                painter = painterResources,
+                contentDescription = "textImageIcon",
+                tint = Color.White
+            )
         },
         colors = TextFieldDefaults.textFieldColors(
-//            containerColor = Grey,
+            containerColor = DarkGrey,
             unfocusedLabelColor = Grey,
             focusedLabelColor = Grey,
-            cursorColor = Black,
-            textColor = Black,
+            cursorColor = Color.White,
+            textColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),
@@ -84,17 +91,22 @@ fun PasswordTextView(labelValue: String, painterResources: Painter) {
             passwordValue.value = it
         },
         textStyle = TextStyle(
-            fontSize = 20.sp
+            fontSize = 18.sp,
+            fontFamily = FontFamily(Font(R.font.outfit_regular))
         ),
         leadingIcon = {
-            Icon(painter = painterResources, contentDescription = "textImageIcon", tint = Black)
+            Icon(
+                painter = painterResources,
+                contentDescription = "textImageIcon",
+                tint = Color.White
+            )
         },
         colors = TextFieldDefaults.textFieldColors(
-//            containerColor = Grey,
+            containerColor = DarkGrey,
             unfocusedLabelColor = Grey,
             focusedLabelColor = Grey,
-            cursorColor = Black,
-            textColor = Black,
+            cursorColor = Color.White,
+            textColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),
@@ -110,7 +122,7 @@ fun PasswordTextView(labelValue: String, painterResources: Painter) {
                 )
 
             IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
-                Icon(imageVector = imageIcon, contentDescription = description)
+                Icon(imageVector = imageIcon, contentDescription = description, tint = Grey)
             }
         },
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation()

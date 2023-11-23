@@ -93,4 +93,7 @@ dependencies {
 
     //Material3 icons
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
+
+    // status bar
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 }
