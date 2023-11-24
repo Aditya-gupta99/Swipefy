@@ -11,7 +11,7 @@ import com.sparklead.swipefy.screens.SignUpScreen
 fun Navigation() {
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.SignUpScreen.route) {
+    NavHost(navController = navController, startDestination = Screen.SignInScreen.route) {
         composable(Screen.SignUpScreen.route) {
             SignUpScreen(navController)
         }

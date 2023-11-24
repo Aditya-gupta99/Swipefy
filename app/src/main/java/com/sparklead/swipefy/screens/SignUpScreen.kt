@@ -10,11 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sparklead.swipefy.R
-import com.sparklead.swipefy.components.ClickableTextView
+import com.sparklead.swipefy.components.ClickableTextViewLogin
 import com.sparklead.swipefy.components.DividerTextView
 import com.sparklead.swipefy.components.GradiantButton
 import com.sparklead.swipefy.components.HeadingTextView
@@ -57,7 +56,7 @@ fun SignUpScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(40.dp))
             DividerTextView(value = "or")
             Spacer(modifier = Modifier.height(40.dp))
-            ClickableTextView {
+            ClickableTextViewLogin(initialText = "Already have an account ? ", clickText = "Login") {
                 navController.navigate(Screen.SignInScreen.route)
             }
         }
