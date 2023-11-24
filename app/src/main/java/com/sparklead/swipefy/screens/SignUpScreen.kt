@@ -12,6 +12,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.sparklead.swipefy.R
 import com.sparklead.swipefy.components.ClickableTextView
 import com.sparklead.swipefy.components.DividerTextView
@@ -20,10 +21,11 @@ import com.sparklead.swipefy.components.HeadingTextView
 import com.sparklead.swipefy.components.NormalEditTextView
 import com.sparklead.swipefy.components.NormalTextView
 import com.sparklead.swipefy.components.PasswordTextView
+import com.sparklead.swipefy.navigation.Screen
 import com.sparklead.swipefy.ui.theme.AppBlack
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(navController: NavController) {
 
     Surface(
         modifier = Modifier
@@ -55,13 +57,9 @@ fun SignUpScreen() {
             Spacer(modifier = Modifier.height(40.dp))
             DividerTextView(value = "or")
             Spacer(modifier = Modifier.height(40.dp))
-            ClickableTextView()
+            ClickableTextView {
+                navController.navigate(Screen.SignInScreen.route)
+            }
         }
     }
-}
-
-@Preview
-@Composable
-fun Preview() {
-    SignUpScreen()
 }

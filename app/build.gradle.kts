@@ -96,4 +96,7 @@ dependencies {
 
     // status bar
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+
+    // navigation component
+    implementation("androidx.navigation:navigation-compose:2.7.5")
 }
