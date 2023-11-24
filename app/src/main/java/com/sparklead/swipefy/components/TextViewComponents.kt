@@ -70,7 +70,7 @@ fun DividerTextView(value: String) {
 }
 
 @Composable
-fun ClickableTextView() {
+fun ClickableTextView(onClick: () -> Unit) {
     val initialText = "Already have an account ? "
     val loginText = stringResource(id = R.string.login)
 
@@ -90,9 +90,9 @@ fun ClickableTextView() {
         color = Color.White
     ), text = annotatedString, onClick = { offset ->
         annotatedString.getStringAnnotations(offset, offset).firstOrNull()?.also {
-                if (it.item == loginText) {
-
-                }
+            if (it.item == loginText) {
+                onClick()
             }
+        }
     })
 }
