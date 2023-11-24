@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -60,7 +59,7 @@ fun DividerTextView(value: String) {
                 .fillMaxWidth()
                 .weight(1f), color = Color.Gray, thickness = 1.dp
         )
-        Text(modifier = Modifier.padding(8.dp), text = value, fontSize = 18.sp, color = DarkGreen)
+        Text(modifier = Modifier.padding(8.dp), text = value, fontSize = 18.sp, color = Color.White)
         Divider(
             modifier = Modifier
                 .fillMaxWidth()
@@ -70,15 +69,13 @@ fun DividerTextView(value: String) {
 }
 
 @Composable
-fun ClickableTextView(onClick: () -> Unit) {
-    val initialText = "Already have an account ? "
-    val loginText = stringResource(id = R.string.login)
+fun ClickableTextViewLogin(initialText: String, clickText: String, onClick: () -> Unit) {
 
     val annotatedString = buildAnnotatedString {
         append(initialText)
         withStyle(style = SpanStyle(color = DarkGreen)) {
-            pushStringAnnotation(tag = loginText, annotation = loginText)
-            append(loginText)
+            pushStringAnnotation(tag = clickText, annotation = clickText)
+            append(clickText)
         }
     }
 
@@ -90,7 +87,7 @@ fun ClickableTextView(onClick: () -> Unit) {
         color = Color.White
     ), text = annotatedString, onClick = { offset ->
         annotatedString.getStringAnnotations(offset, offset).firstOrNull()?.also {
-            if (it.item == loginText) {
+            if (it.item == clickText) {
                 onClick()
             }
         }
