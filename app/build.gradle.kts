@@ -99,4 +99,10 @@ dependencies {
 
     // navigation component
     implementation("androidx.navigation:navigation-compose:2.7.5")
+
+    // bumble card
+    implementation("com.github.PratyushSingh07:BumbleCardSwipe:1.0.0")
+
+    //
+    implementation("androidx.compose.material:material:1.5.4")
 }
