@@ -21,7 +21,7 @@ import com.sparklead.swipefy.components.NormalEditTextView
 import com.sparklead.swipefy.components.NormalTextView
 import com.sparklead.swipefy.components.PasswordTextView
 import com.sparklead.swipefy.navigation.Screen
-import com.sparklead.swipefy.ui.theme.AppBlack
+import com.sparklead.swipefy.ui.theme.Black
 
 @Composable
 fun SignUpScreen(navController: NavController) {
@@ -30,7 +30,7 @@ fun SignUpScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .padding(18.dp),
-        color = AppBlack
+        color = Black
     ) {
         Column {
             Spacer(modifier = Modifier.height(10.dp))
@@ -52,11 +52,16 @@ fun SignUpScreen(navController: NavController) {
                 painterResources = painterResource(id = R.drawable.ic_password)
             )
             Spacer(modifier = Modifier.height(80.dp))
-            GradiantButton(value = "Register")
+            GradiantButton(value = "Register") {
+                navController.navigate(Screen.HomeScreen.route)
+            }
             Spacer(modifier = Modifier.height(40.dp))
             DividerTextView(value = "or")
             Spacer(modifier = Modifier.height(40.dp))
-            ClickableTextViewLogin(initialText = "Already have an account ? ", clickText = "Login") {
+            ClickableTextViewLogin(
+                initialText = "Already have an account ? ",
+                clickText = "Login"
+            ) {
                 navController.navigate(Screen.SignInScreen.route)
             }
         }

@@ -3,6 +3,7 @@ package com.sparklead.swipefy.components
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
@@ -92,4 +93,36 @@ fun ClickableTextViewLogin(initialText: String, clickText: String, onClick: () -
             }
         }
     })
+}
+
+@Composable
+fun LeftAlignNormalText(value: String) {
+
+    Text(
+        text = value,
+        modifier = Modifier.wrapContentWidth(), style = TextStyle(
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal,
+            fontFamily = FontFamily(Font(R.font.outfit_regular))
+        ),
+        color = Color.White,
+        textAlign = TextAlign.Left
+    )
+}
+
+@Composable
+fun LeftAlignHeadingText(value: String) {
+
+    Text(
+        text = value,
+        modifier = Modifier.wrapContentWidth(), style = TextStyle(
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal,
+            fontFamily = FontFamily(Font(R.font.outfit_medium))
+        ),
+        color = Color.White,
+        textAlign = TextAlign.Left
+    )
 }
