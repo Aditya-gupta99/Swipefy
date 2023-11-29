@@ -1,10 +1,14 @@
 package com.sparklead.swipefy.presentation.sign_up
 
-data class SignUpUiState(
+import com.google.firebase.auth.AuthResult
 
-    val isLoading: Boolean = false,
+sealed class SignUpUiState {
 
-    val error: String = "",
+    object Empty : SignUpUiState()
 
-    val success: String? = null
-)
+    object Loading : SignUpUiState()
+
+    data class Success(val user: String) : SignUpUiState()
+
+    data class Error(val message: String) : SignUpUiState()
+}

@@ -19,12 +19,9 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
@@ -45,6 +42,7 @@ import com.sparklead.swipefy.presentation.components.NormalTextView
 import com.sparklead.swipefy.presentation.components.PasswordTextView
 import com.sparklead.swipefy.presentation.navigation.Screen
 import com.sparklead.swipefy.presentation.theme.Black
+import com.sparklead.swipefy.presentation.theme.LightGreen
 
 @Composable
 fun SignUpScreen(navController: NavController) {
@@ -56,18 +54,28 @@ fun SignUpScreen(navController: NavController) {
     val password = rememberSaveable { mutableStateOf("") }
     val passwordConfirm = rememberSaveable { mutableStateOf("") }
     val showDialog = rememberSaveable { mutableStateOf(false) }
-    val launched = rememberSaveable { mutableStateOf(false) }
-
-
-
-    val scope = rememberCoroutineScope()
-    val state = signUpViewModel.signUpUiState
+    val state = signUpViewModel.signUpUiState.collectAsState().value
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(key1 = state.value.error) {
-        showDialog.value = false
-        if (state.value.error.isNotBlank()) {
-            snackbarHostState.showSnackbar(state.value.error)
+    when (state) {
+        is SignUpUiState.Empty -> {
+            showDialog.value = false
+        }
+
+        is SignUpUiState.Error -> {
+            showDialog.value = false
+            LaunchedEffect(key1 = state.message) {
+                snackbarHostState.showSnackbar(state.message)
+            }
+        }
+
+        is SignUpUiState.Loading -> {
+            showDialog.value = true
+        }
+
+        is SignUpUiState.Success -> {
+            showDialog.value = false
+            navController.navigate(Screen.HomeScreen.route)
         }
     }
 
@@ -110,8 +118,6 @@ fun SignUpScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(80.dp))
             GradiantButton(value = "Register") {
                 signUpViewModel.signUpUser(email.value, password.value)
-                showDialog.value = true
-                launched.value = !launched.value
             }
             Spacer(modifier = Modifier.height(40.dp))
             DividerTextView(value = "or")
@@ -128,14 +134,7 @@ fun SignUpScreen(navController: NavController) {
                 onDismissRequest = { showDialog.value },
                 DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
             ) {
-                Box(
-                    contentAlignment= Center,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .background(White, shape = RoundedCornerShape(8.dp))
-                ) {
-                    CircularProgressIndicator()
-                }
+                    CircularProgressIndicator(color = LightGreen)
             }
         }
     }
