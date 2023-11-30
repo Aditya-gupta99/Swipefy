@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "131044723237",
+    "project_id": "swipefy-6ed98",
+    "storage_bucket": "swipefy-6ed98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:131044723237:android:9f7f9797a504c80ae7cdcc",
+        "android_client_info": {
+          "package_name": "com.sparklead.swipefy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-TU6mnLfklCYBGYtzxiL-g-2t9UsF9xw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,12 +11,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sparklead.swipefy.components.NavigationBar
-import com.sparklead.swipefy.components.StatusBarColor
-import com.sparklead.swipefy.navigation.Navigation
-import com.sparklead.swipefy.navigation.Screen
-import com.sparklead.swipefy.ui.theme.Black
-import com.sparklead.swipefy.utils.Constants
+import com.sparklead.swipefy.common.Constants
+import com.sparklead.swipefy.presentation.components.NavigationBar
+import com.sparklead.swipefy.presentation.components.StatusBarColor
+import com.sparklead.swipefy.presentation.navigation.Navigation
+import com.sparklead.swipefy.presentation.navigation.Screen
+import com.sparklead.swipefy.presentation.theme.Black
 
 @Composable
 fun SwipefyApp() {
