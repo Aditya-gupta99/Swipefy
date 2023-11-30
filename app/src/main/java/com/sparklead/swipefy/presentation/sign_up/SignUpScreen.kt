@@ -1,16 +1,12 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
 package com.sparklead.swipefy.presentation.sign_up
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -22,9 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -49,13 +43,10 @@ fun SignUpScreen(navController: NavController) {
 
     val signUpViewModel: SignUpViewModel = hiltViewModel()
 
-    val name = rememberSaveable { mutableStateOf("") }
-    val email = rememberSaveable { mutableStateOf("") }
-    val password = rememberSaveable { mutableStateOf("") }
-    val passwordConfirm = rememberSaveable { mutableStateOf("") }
     val showDialog = rememberSaveable { mutableStateOf(false) }
     val state = signUpViewModel.signUpUiState.collectAsState().value
     val snackbarHostState = remember { SnackbarHostState() }
+    val validationState = signUpViewModel.validationState
 
     when (state) {
         is SignUpUiState.Empty -> {
@@ -87,8 +78,8 @@ fun SignUpScreen(navController: NavController) {
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         },
-    ) {
-        Column(modifier = Modifier.padding(it)) {
+    ) { padding ->
+        Column(modifier = Modifier.padding(padding)) {
             Spacer(modifier = Modifier.height(10.dp))
             NormalTextView(value = stringResource(id = R.string.hey_there))
             Spacer(modifier = Modifier.height(6.dp))
@@ -97,27 +88,42 @@ fun SignUpScreen(navController: NavController) {
             NormalEditTextView(
                 labelValue = "Name",
                 painterResource(id = R.drawable.ic_person),
-                name
-            )
-            Spacer(modifier = Modifier.height(15.dp))
+                textValue = validationState.name,
+                error = validationState.nameError
+            ) {
+                signUpViewModel.onValidationEvent(SignUpValidationEvent.NameChanged(it))
+            }
+            Spacer(modifier = Modifier.height(3.dp))
             NormalEditTextView(
                 labelValue = "Email",
                 painterResource(id = R.drawable.ic_email),
-                email
-            )
-            Spacer(modifier = Modifier.height(15.dp))
+                textValue = validationState.email,
+                error = validationState.emailError
+            ) {
+                signUpViewModel.onValidationEvent(SignUpValidationEvent.EmailChanged(it))
+            }
+            Spacer(modifier = Modifier.height(3.dp))
             PasswordTextView(
                 labelValue = "Password",
-                painterResources = painterResource(id = R.drawable.ic_password), password
-            )
-            Spacer(modifier = Modifier.height(15.dp))
+                painterResources = painterResource(id = R.drawable.ic_password),
+                validationState.password,
+                validationState.passwordError
+            ) {
+                signUpViewModel.onValidationEvent(SignUpValidationEvent.PasswordChanged(it))
+            }
+            Spacer(modifier = Modifier.height(3.dp))
             PasswordTextView(
                 labelValue = "Confirm password",
-                painterResources = painterResource(id = R.drawable.ic_password), passwordConfirm
-            )
+                painterResources = painterResource(id = R.drawable.ic_password),
+                validationState.confirmPassword,
+                validationState.confirmPasswordError
+            ) {
+                signUpViewModel.onValidationEvent(SignUpValidationEvent.ConfirmPasswordChanged(it))
+
+            }
             Spacer(modifier = Modifier.height(80.dp))
             GradiantButton(value = "Register") {
-                signUpViewModel.signUpUser(email.value, password.value)
+                signUpViewModel.onValidationEvent(SignUpValidationEvent.Register)
             }
             Spacer(modifier = Modifier.height(40.dp))
             DividerTextView(value = "or")
@@ -134,7 +140,7 @@ fun SignUpScreen(navController: NavController) {
                 onDismissRequest = { showDialog.value },
                 DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
             ) {
-                    CircularProgressIndicator(color = LightGreen)
+                CircularProgressIndicator(color = LightGreen)
             }
         }
     }

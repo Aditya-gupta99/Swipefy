@@ -46,13 +46,17 @@ fun SignInScreen(navController: NavController) {
             NormalEditTextView(
                 labelValue = "Email",
                 painterResource(id = R.drawable.ic_email),
-                email
-            )
+                "", ""
+            ) {
+
+            }
             Spacer(modifier = Modifier.height(15.dp))
             PasswordTextView(
                 labelValue = "Password",
-                painterResources = painterResource(id = R.drawable.ic_password), password
-            )
+                painterResources = painterResource(id = R.drawable.ic_password), "", ""
+            ) {
+
+            }
             Spacer(modifier = Modifier.height(200.dp))
             GradiantButton(value = "Register") {
                 navController.navigate(Screen.HomeScreen.route)
