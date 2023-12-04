@@ -16,8 +16,12 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.sparklead.swipefy.R
 import com.sparklead.swipefy.presentation.components.CircularIconButton
 import com.sparklead.swipefy.presentation.components.LeftAlignHeadingText
 import com.sparklead.swipefy.presentation.components.LeftAlignNormalText
@@ -36,7 +40,7 @@ fun HomeScreen(navController: NavController) {
         Column {
             Row {
                 Column(modifier = Modifier.weight(2f)) {
-                    LeftAlignNormalText(value = "Welcome Back,")
+                    LeftAlignNormalText(value = stringResource(id = R.string.welcome_back))
                     Spacer(modifier = Modifier.height(6.dp))
                     LeftAlignHeadingText(value = "Ankur Singh")
                 }
@@ -55,4 +59,10 @@ fun HomeScreen(navController: NavController) {
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun HomeScreenPreview() {
+    HomeScreen(navController = rememberNavController())
 }

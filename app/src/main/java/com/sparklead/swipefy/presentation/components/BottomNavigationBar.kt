@@ -38,7 +38,7 @@ fun NavigationBar(
                     Icon(
                         painter = painterResource(id = item.icon),
                         contentDescription = item.title,
-                        tint = if (selected) Color.White else Color.White.copy(0.4f)
+                        tint = if (selected) Color.Green.copy(0.7f) else Color.White.copy(0.4f)
                     )
                 },
                 label = {
