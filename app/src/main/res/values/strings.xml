@@ -8,4 +8,10 @@
     <string name="show_password">Show password</string>
     <string name="already_have_account">Already have an account ?</string>
     <string name="login">login</string>
+    <string name="swipe_stats">Swipe Stats</string>
+    <string name="swipes">Swipes</string>
+    <string name="liked">Liked</string>
+    <string name="disliked">Disliked</string>
+    <string name="skips">Skips</string>
+    <string name="swipe_activity">Swipe Activity</string>
 </resources>
