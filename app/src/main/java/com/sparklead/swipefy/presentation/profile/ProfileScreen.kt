@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -32,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -44,13 +42,10 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.sparklead.swipefy.R
-import com.sparklead.swipefy.presentation.theme.Black
+import com.sparklead.swipefy.presentation.components.ProfileTextField
 
 @Composable
 fun ProfileScreen(navController: NavController) {
-
-    val systemUiController = rememberSystemUiController()
-    val statusBarColor = Color(0xFF1DB954)
 
     val imageUri = rememberSaveable { mutableStateOf("") }
     val painter = rememberImagePainter(
@@ -65,15 +60,7 @@ fun ProfileScreen(navController: NavController) {
         uri?.let { imageUri.value = it.toString() }
     }
 
-    DisposableEffect(key1 = true) {
-        systemUiController.setStatusBarColor(statusBarColor)
-        onDispose {
-            systemUiController.setStatusBarColor(
-                color = Color.Black,
-                darkIcons = true
-            )
-        }
-    }
+    StatusBarColor()
 
     Column(
         modifier = Modifier
@@ -126,99 +113,22 @@ fun ProfileScreen(navController: NavController) {
                 .fillMaxWidth()
                 .padding(start = 16.dp)
         ) {
-            Text(
-                text = stringResource(R.string.swipe_stats),
-                color = Color.White,
-                style = TextStyle(
-                    fontSize = 21.sp,
-                    fontFamily = FontFamily(Font(R.font.outfit_medium))
-                )
-            )
+            ProfileTextField(footerText = R.string.swipe_stats)
         }
 
         Spacer(Modifier.height(8.dp))
 
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-            Column {
-                Text(
-                    text = "26",
-                    color = Color.White,
-                    style = TextStyle(
-                        fontSize = 21.sp,
-                        fontFamily = FontFamily(Font(R.font.outfit_medium))
-                    )
-                )
-                Text(
-                    text = stringResource(R.string.swipes),
-                    color = Color.White,
-                    style = TextStyle(
-                        fontSize = 21.sp,
-                        fontFamily = FontFamily(Font(R.font.outfit_medium))
-                    )
-                )
-
-            }
-            Column {
-                Text(
-                    text = "0",
-                    color = Color.White,
-                    style = TextStyle(
-                        fontSize = 21.sp,
-                        fontFamily = FontFamily(Font(R.font.outfit_medium))
-                    )
-                )
-                Text(
-                    text = stringResource(R.string.liked),
-                    color = Color.White,
-                    style = TextStyle(
-                        fontSize = 21.sp,
-                        fontFamily = FontFamily(Font(R.font.outfit_medium))
-                    )
-                )
-
-            }
-            Column {
-                Text(
-                    text = "0",
-                    color = Color.White,
-                    style = TextStyle(
-                        fontSize = 21.sp,
-                        fontFamily = FontFamily(Font(R.font.outfit_medium))
-                    )
-                )
-                Text(
-                    text = stringResource(R.string.disliked),
-                    color = Color.White,
-                    style = TextStyle(
-                        fontSize = 21.sp,
-                        fontFamily = FontFamily(Font(R.font.outfit_medium))
-                    )
-                )
-
-            }
-
-            Column {
-                Text(
-                    text = "0",
-                    color = Color.White,
-                    style = TextStyle(
-                        fontSize = 21.sp,
-                        fontFamily = FontFamily(Font(R.font.outfit_medium))
-                    )
-                )
-                Text(
-                    text = stringResource(R.string.skips),
-                    color = Color.White,
-                    style = TextStyle(
-                        fontSize = 21.sp,
-                        fontFamily = FontFamily(Font(R.font.outfit_medium))
-                    )
-                )
-
-            }
-
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        )
+        {
+            ProfileTextField(headerText = "0", footerText = R.string.swipes)
+            ProfileTextField(headerText = "0", footerText = R.string.liked)
+            ProfileTextField(headerText = "0", footerText = R.string.disliked)
+            ProfileTextField(headerText = "0", footerText = R.string.skips)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -226,17 +136,27 @@ fun ProfileScreen(navController: NavController) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp)) {
-            Text(
-                text = stringResource(R.string.swipe_activity),
-                color = Color.White,
-                style = TextStyle(
-                    fontSize = 21.sp,
-                    fontFamily = FontFamily(Font(R.font.outfit_medium))
-                )
-            )
+                .padding(start = 16.dp)
+        ) {
+            ProfileTextField(footerText = R.string.swipe_activity)
         }
 
+    }
+}
+
+@Composable
+fun StatusBarColor() {
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = Color(0xFF1DB954)
+
+    DisposableEffect(key1 = true) {
+        systemUiController.setStatusBarColor(statusBarColor)
+        onDispose {
+            systemUiController.setStatusBarColor(
+                color = Color.Black,
+                darkIcons = true
+            )
+        }
     }
 }
 
