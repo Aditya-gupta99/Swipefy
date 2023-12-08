@@ -111,4 +111,7 @@ dependencies {
     //firebase
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
     implementation("com.google.firebase:firebase-auth:22.3.0")
+
+    // coil
+    implementation("io.coil-kt:coil-compose:1.3.2")
 }
