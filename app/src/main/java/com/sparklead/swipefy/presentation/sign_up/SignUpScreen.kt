@@ -150,7 +150,9 @@ fun SignUpScreen(navController: NavController) {
                             id = R.string.show_password
                         )
 
-                    IconButton(onClick = { confirmPasswordVisibility = !confirmPasswordVisibility }) {
+                    IconButton(onClick = {
+                        confirmPasswordVisibility = !confirmPasswordVisibility
+                    }) {
                         Icon(imageVector = imageIcon, contentDescription = description, tint = Grey)
                     }
                 },
