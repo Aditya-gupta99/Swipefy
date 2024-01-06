@@ -114,4 +114,12 @@ dependencies {
 
     // coil
     implementation("io.coil-kt:coil-compose:1.3.2")
+
+    // Ktor dependencies
+    implementation("io.ktor:ktor-client-core:1.6.3")
+    implementation("io.ktor:ktor-client-android:1.6.3")
+    implementation("io.ktor:ktor-client-serialization:1.6.3")
+    implementation("io.ktor:ktor-client-logging:1.6.3")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 }
