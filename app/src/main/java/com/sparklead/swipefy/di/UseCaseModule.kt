@@ -4,6 +4,7 @@ import com.sparklead.swipefy.domain.use_case.ConfirmPasswordValidationUseCase
 import com.sparklead.swipefy.domain.use_case.EmailValidationUseCase
 import com.sparklead.swipefy.domain.use_case.NameValidationUseCase
 import com.sparklead.swipefy.domain.use_case.PasswordValidationUseCase
+import com.sparklead.swipefy.domain.use_case.TrackUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,4 +32,5 @@ object UseCaseModule {
     @Singleton
     fun providesConfirmPasswordValidationUseCase(): ConfirmPasswordValidationUseCase =
         ConfirmPasswordValidationUseCase()
+
 }
