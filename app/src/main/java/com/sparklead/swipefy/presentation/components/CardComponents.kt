@@ -35,7 +35,7 @@ import com.pratyush.swipeablecard.ExperimentalSwipeGestureApi
 import com.pratyush.swipeablecard.enums.Direction
 import com.pratyush.swipeablecard.swipeableCard
 import com.sparklead.swipefy.R
-import com.sparklead.swipefy.domain.model.SwipeSong
+import com.sparklead.swipefy.data.dto.track.TrackDto
 import com.sparklead.swipefy.presentation.theme.Black
 import com.sparklead.swipefy.presentation.theme.DarkGreen
 import com.sparklead.swipefy.presentation.theme.DarkGrey
@@ -67,12 +67,12 @@ fun SmallIconButton(image: ImageVector) {
 
 
 @Composable
-fun SwipeCard() {
-    val songList = listOf(
-        SwipeSong("See You Again", "Wiz Khalifa", "stream data"),
-        SwipeSong("I Will Return", "Skyler Grey", "stream data"),
-        SwipeSong("Ride Out", "Kid Ink, Tyga Wale", "stream data")
-    )
+fun SwipeCard(songList: List<TrackDto>) {
+//    val songList = listOf(
+//        SwipeSong("See You Again", "Wiz Khalifa", "stream data"),
+//        SwipeSong("I Will Return", "Skyler Grey", "stream data"),
+//        SwipeSong("Ride Out", "Kid Ink, Tyga Wale", "stream data")
+//    )
     val lastIndex = songList.lastIndex
     val currentIndex = rememberSaveable { mutableIntStateOf(0) }
 
@@ -104,7 +104,7 @@ fun SwipeCard() {
 
 @OptIn(ExperimentalSwipeGestureApi::class)
 @Composable
-fun SongCard(profile: SwipeSong, onSwipe: (Direction) -> Unit, modifier: Modifier = Modifier) {
+fun SongCard(profile: TrackDto, onSwipe: (Direction) -> Unit, modifier: Modifier = Modifier) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = DarkGrey,
@@ -133,7 +133,7 @@ fun SongCard(profile: SwipeSong, onSwipe: (Direction) -> Unit, modifier: Modifie
                 contentDescription = "poster"
             )
             Text(
-                text = profile.name,
+                text = profile.tracks[0].name,
                 modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(
                     fontSize = 24.sp,
@@ -143,7 +143,7 @@ fun SongCard(profile: SwipeSong, onSwipe: (Direction) -> Unit, modifier: Modifie
                 textAlign = TextAlign.Center
             )
             Text(
-                text = profile.singer,
+                text = profile.tracks[0].artists[0].name,
                 modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(
                     fontSize = 18.sp,

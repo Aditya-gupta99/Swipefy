@@ -1,6 +1,8 @@
 package com.sparklead.swipefy.di
 
 import com.google.firebase.auth.FirebaseAuth
+import com.sparklead.swipefy.data.service.SpotifyService
+import com.sparklead.swipefy.data.serviceImp.SpotifyServiceImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,4 +45,8 @@ object ApplicationModule {
             }
         }
     }
+
+    @Provides
+    @Singleton
+    fun providesSpotifyService(client: HttpClient): SpotifyService = SpotifyServiceImp(client)
 }
