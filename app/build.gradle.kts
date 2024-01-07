@@ -114,7 +114,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.0")
 
     // coil
-    implementation("io.coil-kt:coil-compose:1.3.2")
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
     // Ktor dependencies
     implementation("io.ktor:ktor-client-core:1.6.3")

@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.pratyush.swipeablecard.ExperimentalSwipeGestureApi
 import com.pratyush.swipeablecard.enums.Direction
 import com.pratyush.swipeablecard.swipeableCard
@@ -68,11 +69,6 @@ fun SmallIconButton(image: ImageVector) {
 
 @Composable
 fun SwipeCard(songList: List<TrackDto>) {
-//    val songList = listOf(
-//        SwipeSong("See You Again", "Wiz Khalifa", "stream data"),
-//        SwipeSong("I Will Return", "Skyler Grey", "stream data"),
-//        SwipeSong("Ride Out", "Kid Ink, Tyga Wale", "stream data")
-//    )
     val lastIndex = songList.lastIndex
     val currentIndex = rememberSaveable { mutableIntStateOf(0) }
 
@@ -124,12 +120,12 @@ fun SongCard(profile: TrackDto, onSwipe: (Direction) -> Unit, modifier: Modifier
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val painter = painterResource(id = R.drawable.demo_poster)
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .aspectRatio(painter.intrinsicSize.width / painter.intrinsicSize.height)
                     .padding(16.dp)
                     .clip(RoundedCornerShape(percent = 4)),
-                painter = painter,
+                model = profile.tracks[0].album.images[0].url,
                 contentDescription = "poster"
             )
             Text(
