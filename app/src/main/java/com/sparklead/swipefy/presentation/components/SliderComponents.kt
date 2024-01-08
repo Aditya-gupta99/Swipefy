@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.SliderPositions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
@@ -17,17 +18,19 @@ import com.sparklead.swipefy.presentation.theme.Grey
 import com.sparklead.swipefy.presentation.theme.LightGreen
 
 @Composable
-fun SongSlider() {
+fun SongSlider(onSlideChange: (Float) -> Unit,sliderPosition: Float) {
 
-    val sliderPosition = remember {
-        mutableFloatStateOf(3f)
-    }
+//    val sliderPosition = remember {
+//        mutableFloatStateOf(0f)
+//    }
     val interactionSource = MutableInteractionSource()
     Slider(
         modifier = Modifier.padding(start = 10.dp, end = 10.dp),
-        value = sliderPosition.floatValue,
-        onValueChange = { sliderPosition.floatValue = it },
-        valueRange = 0f..10f,
+        value = sliderPosition,
+        onValueChange = {
+//            sliderPosition.floatValue = it;
+            onSlideChange(it) },
+        valueRange = 0f..100f,
         onValueChangeFinished = {
             // pause music
         },

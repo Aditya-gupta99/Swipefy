@@ -1,6 +1,7 @@
 package com.sparklead.swipefy.presentation.home
 
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -95,7 +96,17 @@ fun HomeScreen(navController: NavController) {
                 SmallIconButton(image = Icons.Outlined.Notifications)
             }
             Spacer(modifier = Modifier.height(40.dp))
-            SwipeCard(songList, currentIndex)
+            SwipeCard(
+                songList,
+                currentIndex,
+                onSlideChange = { homeViewModel.onUiEvents(HomeUiEvent.SeekTo(it)) },
+                progress = homeViewModel.progress,
+                cardSwipe = {
+                    homeViewModel.onUiEvents(HomeUiEvent.PlayPause)
+                    homeViewModel.currentSong =
+                        MediaItem.fromUri(Uri.parse(songList[currentIndex.intValue].tracks[0].preview_url))
+                    homeViewModel.onUiEvents(HomeUiEvent.SelectedMediaChange)
+                })
             Spacer(modifier = Modifier.height(10.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
