@@ -123,4 +123,8 @@ dependencies {
     implementation("io.ktor:ktor-client-logging:1.6.3")
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+
+    //exoplayer dependency
+    implementation("androidx.media3:media3-exoplayer:1.2.0")
+    implementation("androidx.media3:media3-ui:1.2.0")
 }

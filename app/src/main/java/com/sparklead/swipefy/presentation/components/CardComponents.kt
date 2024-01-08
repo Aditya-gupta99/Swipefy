@@ -1,7 +1,6 @@
 package com.sparklead.swipefy.presentation.components
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +16,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -68,9 +68,9 @@ fun SmallIconButton(image: ImageVector) {
 
 
 @Composable
-fun SwipeCard(songList: List<TrackDto>) {
+fun SwipeCard(songList: List<TrackDto>, currentIndex: MutableIntState) {
     val lastIndex = songList.lastIndex
-    val currentIndex = rememberSaveable { mutableIntStateOf(0) }
+//    val currentIndex = rememberSaveable { mutableIntStateOf(0) }
 
     Box(
         modifier = Modifier
