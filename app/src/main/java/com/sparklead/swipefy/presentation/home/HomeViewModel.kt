@@ -54,7 +54,7 @@ class HomeViewModel @Inject constructor(
 
 
     //audio
-    var duration by savedStateHandle.saveable { mutableLongStateOf(0L) }
+    var duration by savedStateHandle.saveable { mutableLongStateOf(29000L) }
     var progress by savedStateHandle.saveable { mutableFloatStateOf(0f) }
     var isPlaying by savedStateHandle.saveable { mutableStateOf(false) }
     var currentSong by savedStateHandle.saveable { mutableStateOf<MediaItem>(MediaItem.fromUri(Uri.EMPTY)) }
@@ -84,17 +84,21 @@ class HomeViewModel @Inject constructor(
 
     fun onUiEvents(uiEvent: HomeUiEvent) = viewModelScope.launch {
         when (uiEvent) {
-            is HomeUiEvent.PlayPause -> exoServiceHandler.onPlayerEvents(ExoPlayerEvent.PlayPause)
+            is HomeUiEvent.PlayPause -> exoServiceHandler.onPlayerEvents(
+                ExoPlayerEvent.PlayPause, progress.toLong()
+            )
 
             is HomeUiEvent.SeekTo -> exoServiceHandler.onPlayerEvents(
                 ExoPlayerEvent.SeekTo,
                 seekPosition = ((duration * uiEvent.position) / 100f).toLong()
             )
 
-            is HomeUiEvent.UpdateProgress -> {}
+            is HomeUiEvent.UpdateProgress -> {
+                exoServiceHandler.onPlayerEvents(ExoPlayerEvent.UpdateProgress(uiEvent.newProgress))
+            }
 
             is HomeUiEvent.SelectedMediaChange -> {
-                exoServiceHandler.addMediaItem(currentSong)
+                exoServiceHandler.onPlayerEvents(ExoPlayerEvent.SelectedAudioChanged(currentSong))
             }
         }
     }

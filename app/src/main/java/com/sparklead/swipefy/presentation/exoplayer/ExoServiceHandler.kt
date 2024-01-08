@@ -1,11 +1,15 @@
+@file:OptIn(DelicateCoroutinesApi::class)
+
 package com.sparklead.swipefy.presentation.exoplayer
 
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -18,7 +22,7 @@ class ExoServiceHandler @Inject constructor(private val exoPlayer: ExoPlayer) : 
 
     private var job: Job? = null
 
-    fun addMediaItem(mediaItem: MediaItem) {
+    private fun addMediaItem(mediaItem: MediaItem) {
         exoPlayer.setMediaItem(mediaItem)
         exoPlayer.prepare()
     }
@@ -29,12 +33,18 @@ class ExoServiceHandler @Inject constructor(private val exoPlayer: ExoPlayer) : 
     ) {
         when (playerEvent) {
             is ExoPlayerEvent.PlayPause -> playOrPause()
+
             is ExoPlayerEvent.SeekTo -> exoPlayer.seekTo(seekPosition)
-            is ExoPlayerEvent.SelectedAudioChanged -> {}
+
+            is ExoPlayerEvent.SelectedAudioChanged -> {
+                addMediaItem(playerEvent.mediaItem)
+                _exoAudioState.value = ExoAudioState.Playing(isPlaying = true)
+//                exoPlayer.playWhenReady = true
+                updateProgress()
+            }
+
             is ExoPlayerEvent.UpdateProgress -> {
-                exoPlayer.seekTo(
-                    (exoPlayer.duration * playerEvent.newProgress).toLong()
-                )
+                exoPlayer.seekTo((exoPlayer.duration * playerEvent.newProgress).toLong())
             }
         }
     }
@@ -53,18 +63,33 @@ class ExoServiceHandler @Inject constructor(private val exoPlayer: ExoPlayer) : 
         _exoAudioState.value = ExoAudioState.CurrentPlaying(exoPlayer.currentMediaItemIndex)
         if (isPlaying) {
             GlobalScope.launch(Dispatchers.IO) {
-
+                updateProgress()
             }
+        } else {
+            stopProgressUpdate()
         }
     }
 
-    private fun playOrPause() {
+    private suspend fun playOrPause() {
         if (exoPlayer.isPlaying) {
             exoPlayer.pause()
+            stopProgressUpdate()
         } else {
             exoPlayer.play()
             _exoAudioState.value = ExoAudioState.Playing(isPlaying = true)
+            updateProgress()
         }
     }
 
+    private suspend fun updateProgress() = job.run {
+        while (true) {
+            delay(500)
+            _exoAudioState.value = ExoAudioState.Progress(exoPlayer.currentPosition)
+        }
+    }
+
+    private fun stopProgressUpdate() {
+        job?.cancel()
+        _exoAudioState.value = ExoAudioState.Playing(isPlaying = false)
+    }
 }
