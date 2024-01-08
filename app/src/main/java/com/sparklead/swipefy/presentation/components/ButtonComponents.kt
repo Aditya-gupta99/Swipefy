@@ -50,14 +50,19 @@ fun GradiantButton(value: String, onclick: () -> Unit) {
 }
 
 @Composable
-fun CircularIconButton(image: ImageVector) {
+fun CircularIconButton(image: ImageVector, onButtonClick: () -> Unit) {
 
     IconButton(
-        onClick = { },
+        onClick = { onButtonClick() },
         modifier = Modifier
             .width(50.dp)
             .height(50.dp)
-            .shadow(elevation = 30.dp, shape = RoundedCornerShape(50.dp) , spotColor = LightGreen, ambientColor = LightGreen),
+            .shadow(
+                elevation = 30.dp,
+                shape = RoundedCornerShape(50.dp),
+                spotColor = LightGreen,
+                ambientColor = LightGreen
+            ),
     ) {
         Box(
             modifier = Modifier

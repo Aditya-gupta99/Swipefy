@@ -1,11 +1,19 @@
 package com.sparklead.swipefy.di
 
+import android.content.Context
+import androidx.media3.common.AudioAttributes
+import androidx.media3.common.C
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import com.google.firebase.auth.FirebaseAuth
 import com.sparklead.swipefy.data.service.SpotifyService
 import com.sparklead.swipefy.data.serviceImp.SpotifyServiceImp
+import com.sparklead.swipefy.presentation.exoplayer.ExoServiceHandler
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -49,4 +57,28 @@ object ApplicationModule {
     @Provides
     @Singleton
     fun providesSpotifyService(client: HttpClient): SpotifyService = SpotifyServiceImp(client)
+
+    @Provides
+    @Singleton
+    fun providesAudioAttribute(): AudioAttributes = AudioAttributes.Builder()
+        .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+        .setUsage(C.USAGE_MEDIA)
+        .build()
+
+    @Provides
+    @Singleton
+    @UnstableApi
+    fun providesExoPlayer(
+        @ApplicationContext context: Context,
+        audioAttributes: AudioAttributes
+    ): ExoPlayer = ExoPlayer.Builder(context)
+        .setAudioAttributes(audioAttributes, true)
+        .setHandleAudioBecomingNoisy(true)
+        .setTrackSelector(DefaultTrackSelector(context))
+        .build()
+
+    @Provides
+    @Singleton
+    fun providesServiceHandler(exoPlayer: ExoPlayer): ExoServiceHandler =
+        ExoServiceHandler(exoPlayer)
 }
