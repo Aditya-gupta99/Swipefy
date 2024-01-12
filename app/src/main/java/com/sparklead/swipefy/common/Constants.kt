@@ -6,6 +6,9 @@ import com.sparklead.swipefy.domain.model.SwipeSong
 
 object Constants {
 
+    const val API_KEY = "X-RapidAPI-Key"
+    const val API_HOST = "X-RapidAPI-Host"
+
     private val fullScreenRoutes = listOf(
         "sign_up_screen",
         "sign_in_screen"
