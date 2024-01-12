@@ -1,6 +1,7 @@
 package com.sparklead.swipefy.presentation.home
 
 import com.sparklead.swipefy.data.dto.track.TrackDto
+import com.sparklead.swipefy.domain.model.SwipeSong
 
 sealed class HomeUiState {
 
@@ -13,4 +14,6 @@ sealed class HomeUiState {
     data class Error(val message: String) : HomeUiState()
 
     object Ready : HomeUiState()
+
+    data class RandomSongSuccess(val list: List<SwipeSong>) : HomeUiState()
 }

@@ -1,5 +1,6 @@
 package com.sparklead.swipefy.data.repository
 
+import com.sparklead.swipefy.data.dto.randomTrack.RandomTrackDto
 import com.sparklead.swipefy.data.dto.track.TrackDto
 import com.sparklead.swipefy.data.service.SpotifyService
 import com.sparklead.swipefy.domain.repository.TrackRepository
@@ -11,4 +12,9 @@ class TrackRepositoryImp @Inject constructor(private val service: SpotifyService
     override suspend fun getTrackById(id: String): TrackDto {
         return service.getTrack(id)
     }
+
+    override suspend fun getRandomTracks(genre: String): RandomTrackDto {
+        return service.getRandomTracksList(genre)
+    }
+
 }

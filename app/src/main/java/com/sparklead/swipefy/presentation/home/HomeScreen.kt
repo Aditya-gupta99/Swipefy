@@ -1,7 +1,6 @@
 package com.sparklead.swipefy.presentation.home
 
 import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,8 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,7 +29,7 @@ import androidx.media3.common.MediaItem
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sparklead.swipefy.R
-import com.sparklead.swipefy.data.dto.track.TrackDto
+import com.sparklead.swipefy.domain.model.SwipeSong
 import com.sparklead.swipefy.presentation.components.CircularIconButton
 import com.sparklead.swipefy.presentation.components.LeftAlignHeadingText
 import com.sparklead.swipefy.presentation.components.LeftAlignNormalText
@@ -46,22 +43,9 @@ fun HomeScreen(navController: NavController) {
     val homeViewModel: HomeViewModel = hiltViewModel()
     val state = homeViewModel.homeUiState.collectAsState().value
 
-    val idList = remember {
-        listOf(
-            "4blqlsA1uf2d2I40E90EUC",
-            "2JzZzZUQj3Qff7wapcbKjc",
-            "3yHyiUDJdz02FZ6jfUbsmY"
-        )
-    }
-    val songList = remember { mutableStateListOf<TrackDto>() }
+    var songList = rememberSaveable { listOf<SwipeSong>() }
     val currentIndex = rememberSaveable { mutableIntStateOf(0) }
 
-
-    LaunchedEffect(key1 = true) {
-        idList.forEach {
-            homeViewModel.getTrackById(it)
-        }
-    }
 
     when (state) {
 
@@ -74,10 +58,14 @@ fun HomeScreen(navController: NavController) {
         is HomeUiState.Loading -> {}
 
         is HomeUiState.Success -> {
-            state.trackDto?.let { songList.add(it) }
+
         }
 
         is HomeUiState.Ready -> {}
+
+        is HomeUiState.RandomSongSuccess -> {
+            songList = state.list
+        }
     }
 
     Surface(
@@ -104,7 +92,7 @@ fun HomeScreen(navController: NavController) {
                 cardSwipe = {
                     homeViewModel.onUiEvents(HomeUiEvent.PlayPause)
                     homeViewModel.currentSong =
-                        MediaItem.fromUri(Uri.parse(songList[currentIndex.intValue].tracks[0].preview_url))
+                        MediaItem.fromUri(Uri.parse(songList[currentIndex.intValue].previewUrl))
                     homeViewModel.onUiEvents(HomeUiEvent.SelectedMediaChange)
                 })
             Spacer(modifier = Modifier.height(10.dp))
@@ -118,7 +106,7 @@ fun HomeScreen(navController: NavController) {
                 CircularIconButton(image = Icons.Filled.Pause) {
                     homeViewModel.onUiEvents(HomeUiEvent.PlayPause)
                     homeViewModel.currentSong =
-                        MediaItem.fromUri(Uri.parse(songList[currentIndex.intValue].tracks[0].preview_url))
+                        MediaItem.fromUri(Uri.parse(songList[currentIndex.intValue].previewUrl))
                     homeViewModel.onUiEvents(HomeUiEvent.SelectedMediaChange)
                 }
                 CircularIconButton(image = Icons.Filled.FavoriteBorder) {
