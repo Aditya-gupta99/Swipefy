@@ -17,8 +17,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -68,9 +66,14 @@ fun SmallIconButton(image: ImageVector) {
 
 
 @Composable
-fun SwipeCard(songList: List<TrackDto>, currentIndex: MutableIntState) {
+fun SwipeCard(
+    songList: List<TrackDto>,
+    currentIndex: MutableIntState,
+    cardSwipe: () -> Unit,
+    progress: Float,
+    onSlideChange: (Float) -> Unit
+) {
     val lastIndex = songList.lastIndex
-//    val currentIndex = rememberSaveable { mutableIntStateOf(0) }
 
     Box(
         modifier = Modifier
@@ -83,9 +86,12 @@ fun SwipeCard(songList: List<TrackDto>, currentIndex: MutableIntState) {
             SongCard(
                 profile = profile,
                 onSwipe = {
+                    cardSwipe()
                     Log.d("DIRECTION", it.name)
                     currentIndex.intValue++
-                }
+                },
+                onSlideChange = onSlideChange,
+                progress = progress
             )
         }
         if (currentIndex.intValue > lastIndex) {
@@ -100,7 +106,13 @@ fun SwipeCard(songList: List<TrackDto>, currentIndex: MutableIntState) {
 
 @OptIn(ExperimentalSwipeGestureApi::class)
 @Composable
-fun SongCard(profile: TrackDto, onSwipe: (Direction) -> Unit, modifier: Modifier = Modifier) {
+fun SongCard(
+    profile: TrackDto,
+    modifier: Modifier = Modifier,
+    onSlideChange: (Float) -> Unit,
+    progress: Float,
+    onSwipe: (Direction) -> Unit
+) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = DarkGrey,
@@ -148,7 +160,7 @@ fun SongCard(profile: TrackDto, onSwipe: (Direction) -> Unit, modifier: Modifier
                 color = Grey,
                 textAlign = TextAlign.Center
             )
-            SongSlider()
+            SongSlider(onSlideChange = onSlideChange, sliderPosition = progress)
         }
     }
 }
