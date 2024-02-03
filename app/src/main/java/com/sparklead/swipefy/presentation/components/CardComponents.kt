@@ -35,6 +35,7 @@ import com.pratyush.swipeablecard.enums.Direction
 import com.pratyush.swipeablecard.swipeableCard
 import com.sparklead.swipefy.R
 import com.sparklead.swipefy.data.dto.track.TrackDto
+import com.sparklead.swipefy.domain.model.SwipeSong
 import com.sparklead.swipefy.presentation.theme.Black
 import com.sparklead.swipefy.presentation.theme.DarkGreen
 import com.sparklead.swipefy.presentation.theme.DarkGrey
@@ -67,7 +68,7 @@ fun SmallIconButton(image: ImageVector) {
 
 @Composable
 fun SwipeCard(
-    songList: List<TrackDto>,
+    songList: List<SwipeSong>,
     currentIndex: MutableIntState,
     cardSwipe: () -> Unit,
     progress: Float,
@@ -107,7 +108,7 @@ fun SwipeCard(
 @OptIn(ExperimentalSwipeGestureApi::class)
 @Composable
 fun SongCard(
-    profile: TrackDto,
+    profile: SwipeSong,
     modifier: Modifier = Modifier,
     onSlideChange: (Float) -> Unit,
     progress: Float,
@@ -137,11 +138,11 @@ fun SongCard(
                     .aspectRatio(painter.intrinsicSize.width / painter.intrinsicSize.height)
                     .padding(16.dp)
                     .clip(RoundedCornerShape(percent = 4)),
-                model = profile.tracks[0].album.images[0].url,
+                model = profile.imageUrl,
                 contentDescription = "poster"
             )
             Text(
-                text = profile.tracks[0].name,
+                text = profile.name,
                 modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(
                     fontSize = 24.sp,
@@ -151,7 +152,7 @@ fun SongCard(
                 textAlign = TextAlign.Center
             )
             Text(
-                text = profile.tracks[0].artists[0].name,
+                text = profile.artist[0].name,
                 modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(
                     fontSize = 18.sp,

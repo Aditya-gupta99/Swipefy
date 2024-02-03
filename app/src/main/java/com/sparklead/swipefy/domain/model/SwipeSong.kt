@@ -1,9 +1,16 @@
 package com.sparklead.swipefy.domain.model
 
 data class SwipeSong(
+
+    val id: String,
+
     val name: String,
 
-    val singer: String,
+    val duration: Int,
 
-    val data: String
+    val previewUrl: String,
+
+    val imageUrl: String,
+
+    val artist: List<Artist>
 )

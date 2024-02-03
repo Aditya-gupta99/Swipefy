@@ -1,5 +1,8 @@
 package com.sparklead.swipefy.data.serviceImp
 
+import com.sparklead.swipefy.BuildConfig
+import com.sparklead.swipefy.common.Constants
+import com.sparklead.swipefy.data.dto.randomTrack.RandomTrackDto
 import com.sparklead.swipefy.data.dto.track.TrackDto
 import com.sparklead.swipefy.data.remote.HttpRoutes
 import com.sparklead.swipefy.data.service.SpotifyService
@@ -17,8 +20,8 @@ class SpotifyServiceImp(private val client: HttpClient) : SpotifyService {
         return try {
             client.get {
                 url(HttpRoutes.TRACK_URL)
-                header("X-RapidAPI-Key", "c6a3281953msh3dcc2de0c17501cp133d9djsncc5157913c65")
-                header("X-RapidAPI-Host", "spotify23.p.rapidapi.com")
+                header(Constants.API_KEY, BuildConfig.X_RapidAPI_Key)
+                header(Constants.API_HOST, BuildConfig.X_RapidAPI_Host)
                 parameter("ids", id)
                 contentType(ContentType.Application.Json)
             }
@@ -27,4 +30,17 @@ class SpotifyServiceImp(private val client: HttpClient) : SpotifyService {
         }
     }
 
+    override suspend fun getRandomTracksList(genre: String): RandomTrackDto {
+        return try {
+            client.get {
+                url(HttpRoutes.RANDOM_TRACKS)
+                header(Constants.API_KEY, BuildConfig.X_RapidAPI_Key)
+                header(Constants.API_HOST, BuildConfig.X_RapidAPI_Host)
+                parameter("limit", 20)
+                parameter("seed_genres", genre)
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+    }
 }

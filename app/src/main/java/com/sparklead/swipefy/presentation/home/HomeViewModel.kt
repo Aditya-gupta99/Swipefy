@@ -13,11 +13,13 @@ import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import androidx.media3.common.MediaItem
 import com.sparklead.swipefy.common.Resource
+import com.sparklead.swipefy.domain.use_case.RandomTracksUseCase
 import com.sparklead.swipefy.domain.use_case.TrackUseCase
 import com.sparklead.swipefy.presentation.exoplayer.ExoAudioState
 import com.sparklead.swipefy.presentation.exoplayer.ExoPlayerEvent
 import com.sparklead.swipefy.presentation.exoplayer.ExoServiceHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -27,6 +29,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val useCase: TrackUseCase,
+    private val randomTracksUseCase: RandomTracksUseCase,
     private val exoServiceHandler: ExoServiceHandler,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -60,6 +63,9 @@ class HomeViewModel @Inject constructor(
     var currentSong by savedStateHandle.saveable { mutableStateOf<MediaItem>(MediaItem.fromUri(Uri.EMPTY)) }
 
     init {
+
+        getRandomSongs(getUserGenre())
+
         viewModelScope.launch {
             exoServiceHandler.exoAudioState.collectLatest { mediaState ->
                 when (mediaState) {
@@ -108,4 +114,26 @@ class HomeViewModel @Inject constructor(
             if (currentProgress > 0) ((currentProgress.toFloat() / duration.toFloat()) * 100f) else 0f
     }
 
+    private fun getUserGenre(): String {
+        // TODO logic to getUser fab Genre
+        return "indian"
+    }
+
+    private fun getRandomSongs(genre: String) = viewModelScope.launch(Dispatchers.IO) {
+        randomTracksUseCase(genre)
+            .collect {
+                when (it) {
+                    is Resource.Error -> _homeUiState.value =
+                        HomeUiState.Error(it.message.toString())
+
+                    is Resource.Loading -> _homeUiState.value = HomeUiState.Loading
+
+                    is Resource.Success -> {
+                        if (it.data?.size == 0) _homeUiState.value =
+                            HomeUiState.Error("No Song Found")
+                        else _homeUiState.value = HomeUiState.RandomSongSuccess(it.data ?: listOf())
+                    }
+                }
+            }
+    }
 }
