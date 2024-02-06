@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sparklead.swipefy.R
 import com.sparklead.swipefy.presentation.theme.DarkGreen
+import com.sparklead.swipefy.presentation.theme.LightGreen
 
 @Composable
 fun NormalTextView(value: String) {
@@ -42,11 +43,12 @@ fun HeadingTextView(value: String) {
     Text(
         text = value, modifier = Modifier.fillMaxWidth(), style = TextStyle(
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal,
             fontFamily = FontFamily(Font(R.font.outfit_medium))
-        ), color = Color.White, textAlign = TextAlign.Center
-
+        ),
+        color = DarkGreen,
+        textAlign = TextAlign.Center
     )
 }
 
@@ -124,5 +126,37 @@ fun LeftAlignHeadingText(value: String) {
         ),
         color = Color.White,
         textAlign = TextAlign.Left
+    )
+}
+
+@Composable
+fun SwipefySongHeadingTextView(value: String) {
+    Text(
+        text = value,
+        modifier = Modifier.fillMaxWidth(),
+        style = TextStyle(
+            fontSize = 17.sp,
+            fontWeight = FontWeight.Medium,
+            fontStyle = FontStyle.Normal,
+            fontFamily = FontFamily(Font(R.font.outfit_medium)),
+        ),
+        color = Color.White,
+        maxLines = 1
+    )
+}
+
+@Composable
+fun SwipefySongArtistTextView(value: String) {
+    Text(
+        text = value,
+        modifier = Modifier.fillMaxWidth(),
+        style = TextStyle(
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Light,
+            fontStyle = FontStyle.Normal,
+            fontFamily = FontFamily(Font(R.font.outfit_medium))
+        ),
+        color = Color.Gray,
+        maxLines = 1
     )
 }

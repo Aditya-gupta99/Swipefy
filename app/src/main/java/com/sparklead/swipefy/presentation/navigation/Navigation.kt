@@ -25,7 +25,7 @@ fun Navigation(navController: NavHostController, padding: PaddingValues) {
             HomeScreen(navController)
         }
         composable(Screen.SongListScreen.route) {
-            SongListScreen(navController)
+            SongListScreen(navController,padding)
         }
         composable(Screen.ProfileScreen.route) {
             ProfileScreen(navController)
