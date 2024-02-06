@@ -22,13 +22,13 @@ fun Navigation(navController: NavHostController, padding: PaddingValues) {
             SignInScreen(navController)
         }
         composable(Screen.HomeScreen.route) {
-            HomeScreen(navController)
+            HomeScreen(navController,padding)
         }
         composable(Screen.SongListScreen.route) {
             SongListScreen(navController,padding)
         }
         composable(Screen.ProfileScreen.route) {
-            ProfileScreen(navController)
+            ProfileScreen(navController,padding)
         }
     }
 }

@@ -1,8 +1,11 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.sparklead.swipefy.presentation.home
 
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +17,8 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,7 +43,7 @@ import com.sparklead.swipefy.presentation.components.SwipeCard
 import com.sparklead.swipefy.presentation.theme.Black
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, padding: PaddingValues) {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
     val state = homeViewModel.homeUiState.collectAsState().value
@@ -68,13 +73,13 @@ fun HomeScreen(navController: NavController) {
         }
     }
 
-    Surface(
+    Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .padding(18.dp),
-        color = Black
+        containerColor = Black
     ) {
-        Column {
+        Column(modifier = Modifier.padding(it)) {
             Row {
                 Column(modifier = Modifier.weight(2f)) {
                     LeftAlignNormalText(value = stringResource(id = R.string.welcome_back))
@@ -115,10 +120,4 @@ fun HomeScreen(navController: NavController) {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController())
 }
