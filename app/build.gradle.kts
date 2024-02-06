@@ -1,4 +1,3 @@
-import com.android.build.api.variant.BuildConfigField
 import java.util.Properties
 
 plugins {
@@ -31,8 +30,16 @@ android {
         properties.load(keyStoreFile.inputStream())
 
 
-        buildConfigField("String" , "X_RapidAPI_Key","\"${properties.getProperty("X_RapidAPI_Key")}\"")
-        buildConfigField("String" , "X_RapidAPI_Host","\"${properties.getProperty("X_RapidAPI_Host")}\"")
+        buildConfigField(
+            "String",
+            "X_RapidAPI_Key",
+            "\"${properties.getProperty("X_RapidAPI_Key")}\""
+        )
+        buildConfigField(
+            "String",
+            "X_RapidAPI_Host",
+            "\"${properties.getProperty("X_RapidAPI_Host")}\""
+        )
     }
 
     buildTypes {
