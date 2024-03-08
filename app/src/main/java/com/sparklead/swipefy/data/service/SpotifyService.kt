@@ -8,4 +8,9 @@ interface SpotifyService {
     suspend fun getTrack(id: String): TrackDto
 
     suspend fun getRandomTracksList(genre: String): RandomTrackDto
+
+    suspend fun getRecommendedSongList(
+        artistList: List<String>,
+        genresList: List<String>
+    ): RandomTrackDto
 }
