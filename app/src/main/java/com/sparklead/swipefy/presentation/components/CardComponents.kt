@@ -38,6 +38,7 @@ import com.pratyush.swipeablecard.enums.Direction
 import com.pratyush.swipeablecard.swipeableCard
 import com.sparklead.swipefy.R
 import com.sparklead.swipefy.data.dto.track.TrackDto
+import com.sparklead.swipefy.domain.model.Song
 import com.sparklead.swipefy.domain.model.SwipeSong
 import com.sparklead.swipefy.presentation.theme.Black
 import com.sparklead.swipefy.presentation.theme.DarkGreen
@@ -170,7 +171,7 @@ fun SongCard(
 }
 
 @Composable
-fun SwipefyRecommendedSongCard(song: SwipeSong) {
+fun SwipefyRecommendedSongCard(song: Song) {
     Card(
         modifier = Modifier.padding(4.dp),
         shape = RoundedCornerShape(4.dp),

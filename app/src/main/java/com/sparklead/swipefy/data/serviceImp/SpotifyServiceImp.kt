@@ -1,5 +1,6 @@
 package com.sparklead.swipefy.data.serviceImp
 
+import android.util.Log
 import com.sparklead.swipefy.BuildConfig
 import com.sparklead.swipefy.common.Constants
 import com.sparklead.swipefy.data.dto.randomTrack.RandomTrackDto
@@ -40,6 +41,24 @@ class SpotifyServiceImp(private val client: HttpClient) : SpotifyService {
                 parameter("seed_genres", genre)
             }
         } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun getRecommendedSongList(
+        artistList: List<String>,
+        genresList: List<String>
+    ): RandomTrackDto {
+        return try {
+            client.get {
+                url(HttpRoutes.RANDOM_TRACKS)
+                header(Constants.API_KEY, BuildConfig.X_RapidAPI_Key)
+                header(Constants.API_HOST, BuildConfig.X_RapidAPI_Host)
+                parameter("limit", 10)
+                parameter("seed_artists", "4YRxDV8wJFPHPTeXepOstw")
+            }
+        } catch (e: Exception) {
+            Log.e("@@@",e.message.toString())
             throw e
         }
     }

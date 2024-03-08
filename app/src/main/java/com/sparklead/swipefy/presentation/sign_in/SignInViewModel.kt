@@ -67,7 +67,6 @@ class SignInViewModel @Inject constructor(
 
     private fun signInUser(email: String, password: String) =
         viewModelScope.launch(Dispatchers.IO) {
-            _signInUiState.value = SignInUiState.Loading
             signInUseCase(email, password).collect { result ->
                 when (result) {
                     is Resource.Error -> {

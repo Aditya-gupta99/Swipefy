@@ -52,7 +52,7 @@ fun ProfileScreen(navController: NavController, padding: PaddingValues) {
     val imageUri = rememberSaveable { mutableStateOf("") }
     val painter = rememberAsyncImagePainter(
         if (imageUri.value.isEmpty())
-            R.drawable.ic_person
+            R.drawable.profile_icon
         else
             imageUri.value
     )
@@ -129,9 +129,9 @@ fun ProfileScreen(navController: NavController, padding: PaddingValues) {
                 horizontalArrangement = Arrangement.SpaceBetween
             )
             {
-                ProfileTextField(headerText = "0", footerText = R.string.swipes)
-                ProfileTextField(headerText = "0", footerText = R.string.liked)
-                ProfileTextField(headerText = "0", footerText = R.string.disliked)
+                ProfileTextField(headerText = "38", footerText = R.string.swipes)
+                ProfileTextField(headerText = "22", footerText = R.string.liked)
+                ProfileTextField(headerText = "16", footerText = R.string.disliked)
                 ProfileTextField(headerText = "0", footerText = R.string.skips)
             }
 
