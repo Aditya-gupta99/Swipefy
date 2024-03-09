@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
@@ -23,13 +24,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -37,7 +38,6 @@ import com.pratyush.swipeablecard.ExperimentalSwipeGestureApi
 import com.pratyush.swipeablecard.enums.Direction
 import com.pratyush.swipeablecard.swipeableCard
 import com.sparklead.swipefy.R
-import com.sparklead.swipefy.data.dto.track.TrackDto
 import com.sparklead.swipefy.domain.model.Song
 import com.sparklead.swipefy.domain.model.SwipeSong
 import com.sparklead.swipefy.presentation.theme.Black
@@ -146,14 +146,16 @@ fun SongCard(
                 contentDescription = "poster"
             )
             Text(
-                text = profile.name,
+                text = profile.name.replace(Regex("(\\s?-\\s?|\\s?\\(\\s?|\\s?\\[\\s?).*$"), "")
+                    .trim(),
                 modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.outfit_medium))
                 ),
                 color = Color.White,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                maxLines = 1
             )
             Text(
                 text = profile.artist[0].name,
@@ -173,9 +175,8 @@ fun SongCard(
 @Composable
 fun SwipefyRecommendedSongCard(song: Song) {
     Card(
-        modifier = Modifier.padding(4.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = CardDefaults.cardColors(DarkGrey)
+        colors = CardDefaults.cardColors(Black)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -183,13 +184,31 @@ fun SwipefyRecommendedSongCard(song: Song) {
             AsyncImage(
                 modifier = Modifier
                     .size(64.dp)
-                    .padding(10.dp),
+                    .padding(10.dp)
+                    .weight(1f),
                 model = song.imageUrl,
                 contentDescription = "Song image"
             )
-            Column {
-                SwipefySongHeadingTextView(value = song.name)
+            Column(modifier = Modifier.weight(3f)) {
+                SwipefySongHeadingTextView(
+                    value = song.name.replace(
+                        Regex("(\\s?-\\s?|\\s?\\(\\s?|\\s?\\[\\s?).*$"),
+                        ""
+                    ).trim()
+                )
                 SwipefySongArtistTextView(value = song.artist[0].name)
+            }
+            IconButton(onClick = {}) {
+                AsyncImage(
+                    modifier = Modifier
+                        .size(22.dp)
+                        .weight(.75f),
+                    model = R.drawable.ic_options,
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(
+                        Color.White
+                    )
+                )
             }
         }
     }

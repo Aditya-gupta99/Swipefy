@@ -22,6 +22,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.sparklead.swipefy.presentation.components.HeadingTextView
 import com.sparklead.swipefy.presentation.components.SwipefyLoadingProgress
+import com.sparklead.swipefy.presentation.components.SwipefyMiniPlayer
 import com.sparklead.swipefy.presentation.components.SwipefyPagingAppendProgress
 import com.sparklead.swipefy.presentation.components.SwipefyRecommendedSongCard
 import com.sparklead.swipefy.presentation.components.SwipefySweetError
@@ -42,6 +43,9 @@ fun SongListScreen(navController: NavController, padding: PaddingValues) {
                 colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Black),
                 title = { HeadingTextView(value = "Recommended Song") }
             )
+        },
+        bottomBar = {
+            SwipefyMiniPlayer()
         },
         containerColor = Black
     ) {
@@ -67,7 +71,6 @@ fun SongListScreen(navController: NavController, padding: PaddingValues) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
             ) {
                 items(songPagingItems.itemCount) { index ->
                     songPagingItems[index]?.let { it1 -> SwipefyRecommendedSongCard(song = it1) }
