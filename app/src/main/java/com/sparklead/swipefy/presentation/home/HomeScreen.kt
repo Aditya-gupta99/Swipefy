@@ -40,6 +40,7 @@ import com.sparklead.swipefy.presentation.components.LeftAlignHeadingText
 import com.sparklead.swipefy.presentation.components.LeftAlignNormalText
 import com.sparklead.swipefy.presentation.components.SmallIconButton
 import com.sparklead.swipefy.presentation.components.SwipeCard
+import com.sparklead.swipefy.presentation.components.SwipefyLoadingProgress
 import com.sparklead.swipefy.presentation.theme.Black
 
 @Composable
@@ -60,7 +61,9 @@ fun HomeScreen(navController: NavController, padding: PaddingValues) {
 
         }
 
-        is HomeUiState.Loading -> {}
+        is HomeUiState.Loading -> {
+            SwipefyLoadingProgress()
+        }
 
         is HomeUiState.Success -> {
 

@@ -21,7 +21,10 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.sparklead.swipefy.presentation.components.HeadingTextView
+import com.sparklead.swipefy.presentation.components.SwipefyLoadingProgress
+import com.sparklead.swipefy.presentation.components.SwipefyPagingAppendProgress
 import com.sparklead.swipefy.presentation.components.SwipefyRecommendedSongCard
+import com.sparklead.swipefy.presentation.components.SwipefySweetError
 import com.sparklead.swipefy.presentation.theme.Black
 
 @Composable
@@ -30,7 +33,6 @@ fun SongListScreen(navController: NavController, padding: PaddingValues) {
     val songListViewModel: SongListViewModel = hiltViewModel()
     val songPagingItems = songListViewModel.songListUiState.collectAsLazyPagingItems()
 
-//    var songList = rememberSaveable { listOf<SwipeSong>() }
 
 
     Scaffold(
@@ -43,6 +45,21 @@ fun SongListScreen(navController: NavController, padding: PaddingValues) {
         },
         containerColor = Black
     ) {
+
+        when (songPagingItems.loadState.refresh) {
+            is LoadState.Error -> {
+                SwipefySweetError(message = "Failed to Fetch Song") {
+                    songListViewModel.getFavoriteArtist()
+                }
+            }
+
+            LoadState.Loading -> {
+                SwipefyLoadingProgress()
+            }
+
+            is LoadState.NotLoading -> Unit
+        }
+
         Column(
             modifier = Modifier.padding(it)
         ) {
@@ -60,17 +77,9 @@ fun SongListScreen(navController: NavController, padding: PaddingValues) {
                     is LoadState.Error -> Unit
 
                     LoadState.Loading -> {
-
-                    }
-
-                    is LoadState.NotLoading -> Unit
-                }
-                when (songPagingItems.loadState.prepend) {
-                    is LoadState.Error -> {
-                    }
-
-                    LoadState.Loading -> {
-
+                        item {
+                            SwipefyPagingAppendProgress()
+                        }
                     }
 
                     is LoadState.NotLoading -> Unit

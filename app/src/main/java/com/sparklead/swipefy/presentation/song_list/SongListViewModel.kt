@@ -3,6 +3,7 @@ package com.sparklead.swipefy.presentation.song_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.sparklead.swipefy.domain.model.Song
 import com.sparklead.swipefy.domain.use_case.GetRecommendedSongsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,17 +16,17 @@ import javax.inject.Inject
 @HiltViewModel
 class SongListViewModel @Inject constructor(
     private val getRecommendedSongsUseCase: GetRecommendedSongsUseCase
-) :
-    ViewModel() {
+) : ViewModel() {
+
     init {
-        getRecommendedSongs()
+        getFavoriteArtist()
     }
 
     private val _songListUiState = MutableStateFlow<PagingData<Song>>(PagingData.empty())
     val songListUiState = _songListUiState.asStateFlow()
 
     fun getFavoriteArtist() {
-
+        getRecommendedSongs()
     }
 
     private fun getRecommendedSongs() = viewModelScope.launch(Dispatchers.IO) {
