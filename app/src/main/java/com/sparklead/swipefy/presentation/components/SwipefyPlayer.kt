@@ -21,11 +21,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sparklead.swipefy.R
+import com.sparklead.swipefy.domain.model.Song
 import com.sparklead.swipefy.presentation.theme.DarkGrey
 import com.sparklead.swipefy.presentation.theme.Grey
 
 @Composable
-fun SwipefyMiniPlayer() {
+fun SwipefyMiniPlayer(song: Song) {
 
     Card(
         modifier = Modifier
@@ -43,21 +44,28 @@ fun SwipefyMiniPlayer() {
                     .size(56.dp)
                     .padding(10.dp)
                     .weight(1f),
-                model = R.drawable.demo_poster,
+                model = song.imageUrl,
                 contentDescription = null
             )
             Column(
                 Modifier
                     .weight(2f)
             ) {
-                Text(text = "See You Again", color = Color.White)
                 Text(
-                    text = "Wiz Khalifa, Charlie Putt",
+                    text = song.name.replace(
+                        Regex("(\\s?-\\s?|\\s?\\(\\s?|\\s?\\[\\s?).*$"),
+                        ""
+                    ).trim(), color = Color.White
+                )
+                Text(
+                    text = song.artist[0].name,
                     color = Color.Gray,
                     fontWeight = FontWeight.Light
                 )
             }
-            Row(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
+            Row(modifier = Modifier
+                .weight(1f)
+                .padding(end = 8.dp)) {
                 IconButton(onClick = {}) {
                     AsyncImage(
                         modifier = Modifier.size(25.dp),

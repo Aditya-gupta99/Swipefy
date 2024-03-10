@@ -14,12 +14,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.sparklead.swipefy.domain.model.Artist
+import com.sparklead.swipefy.domain.model.Song
 import com.sparklead.swipefy.presentation.components.HeadingTextView
 import com.sparklead.swipefy.presentation.components.SwipefyLoadingProgress
 import com.sparklead.swipefy.presentation.components.SwipefyMiniPlayer
@@ -33,6 +37,18 @@ fun SongListScreen(navController: NavController, padding: PaddingValues) {
 
     val songListViewModel: SongListViewModel = hiltViewModel()
     val songPagingItems = songListViewModel.songListUiState.collectAsLazyPagingItems()
+    val miniPlayerSong = remember {
+        mutableStateOf(
+            Song(
+                id = "3yHyiUDJdz02FZ6jfUbsmY",
+                name = "Satranga",
+                duration = 300,
+                previewUrl = "https://p.scdn.co/mp3-preview/7908c3512a17427dbb2747fda555aa84aedeef0d?cid=d8a5ed958d274c2e8ee717e6a4b0971d",
+                imageUrl = "https://i.scdn.co/image/ab67616d0000b273021d7017f73387b008eab271",
+                artist = listOf(Artist(id = "4YRxDV8wJFPHPTeXepOstw", name = "Arijit Singh"))
+            )
+        )
+    }
 
 
 
@@ -45,7 +61,7 @@ fun SongListScreen(navController: NavController, padding: PaddingValues) {
             )
         },
         bottomBar = {
-            SwipefyMiniPlayer()
+            SwipefyMiniPlayer(miniPlayerSong.value)
         },
         containerColor = Black
     ) {
@@ -73,7 +89,11 @@ fun SongListScreen(navController: NavController, padding: PaddingValues) {
                     .fillMaxWidth()
             ) {
                 items(songPagingItems.itemCount) { index ->
-                    songPagingItems[index]?.let { it1 -> SwipefyRecommendedSongCard(song = it1) }
+                    songPagingItems[index]?.let { it1 ->
+                        SwipefyRecommendedSongCard(song = it1) { song ->
+                            miniPlayerSong.value = song
+                        }
+                    }
                 }
 
                 when (songPagingItems.loadState.append) {
