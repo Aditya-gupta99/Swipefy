@@ -18,4 +18,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Swipefy"
 include(":app")
- 
+include(":core:datastore")
