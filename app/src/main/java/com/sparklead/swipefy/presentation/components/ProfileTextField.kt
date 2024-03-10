@@ -20,7 +20,7 @@ fun ProfileTextField(headerText: String? = null, footerText: Int) {
                 text = headerText,
                 color = Color.White,
                 style = TextStyle(
-                    fontSize = 21.sp,
+                    fontSize = 18.sp,
                     fontFamily = FontFamily(Font(R.font.outfit_medium))
                 )
             )
@@ -29,7 +29,7 @@ fun ProfileTextField(headerText: String? = null, footerText: Int) {
             text = stringResource(footerText),
             color = Color.White,
             style = TextStyle(
-                fontSize = 21.sp,
+                fontSize = 20.sp,
                 fontFamily = FontFamily(Font(R.font.outfit_medium))
             )
         )

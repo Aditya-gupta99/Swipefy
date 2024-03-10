@@ -160,3 +160,19 @@ fun SwipefySongArtistTextView(value: String) {
         maxLines = 1
     )
 }
+
+@Composable
+fun SwipefyOptionsTextView(value: String) {
+    Text(
+        text = value,
+        modifier = Modifier.fillMaxWidth(),
+        style = TextStyle(
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Medium,
+            fontStyle = FontStyle.Normal,
+            fontFamily = FontFamily(Font(R.font.outfit_medium)),
+        ),
+        color = Color.White,
+        maxLines = 1
+    )
+}

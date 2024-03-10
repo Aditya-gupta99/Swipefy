@@ -174,9 +174,9 @@ fun SongCard(
 }
 
 @Composable
-fun SwipefyRecommendedSongCard(song: Song,onSongSelected : (Song)->Unit) {
+fun SwipefyRecommendedSongCard(song: Song, onSongSelected: (Song) -> Unit) {
     Card(
-        modifier = Modifier.clickable( onClick = {
+        modifier = Modifier.clickable(onClick = {
             onSongSelected(song)
         }),
         shape = RoundedCornerShape(4.dp),
@@ -208,6 +208,48 @@ fun SwipefyRecommendedSongCard(song: Song,onSongSelected : (Song)->Unit) {
                         .size(22.dp)
                         .weight(.75f),
                     model = R.drawable.ic_options,
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(
+                        Color.White
+                    )
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SwipefyOptionsCard(leadingIcon: Int, option: String, endIcon: Int?) {
+
+    Card(
+        modifier = Modifier.clickable(onClick = {
+
+        }),
+        shape = RoundedCornerShape(4.dp),
+        colors = CardDefaults.cardColors(Black)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            AsyncImage(
+                modifier = Modifier
+                    .size(25.dp)
+                    .weight(1f),
+                model = leadingIcon,
+                contentDescription = "option leading image",
+                colorFilter = ColorFilter.tint(
+                    Color.White
+                )
+            )
+            Column(modifier = Modifier.weight(3f)) {
+                SwipefyOptionsTextView(value = option)
+            }
+            IconButton(onClick = {}) {
+                AsyncImage(
+                    modifier = Modifier
+                        .size(15.dp)
+                        .weight(.75f),
+                    model = endIcon,
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(
                         Color.White

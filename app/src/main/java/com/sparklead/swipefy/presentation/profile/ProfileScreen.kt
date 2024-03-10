@@ -36,15 +36,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.sparklead.swipefy.R
 import com.sparklead.swipefy.presentation.components.ProfileTextField
+import com.sparklead.swipefy.presentation.components.SwipefyOptionsCard
 
 @Composable
 fun ProfileScreen(navController: NavController, padding: PaddingValues) {
@@ -144,7 +143,22 @@ fun ProfileScreen(navController: NavController, padding: PaddingValues) {
             ) {
                 ProfileTextField(footerText = R.string.swipe_activity)
             }
-
+            Spacer(modifier = Modifier.height(40.dp))
+            SwipefyOptionsCard(
+                leadingIcon = R.drawable.download,
+                option = "Download",
+                endIcon = R.drawable.right_icon
+            )
+            SwipefyOptionsCard(
+                leadingIcon = R.drawable.edit_icon,
+                option = "Edit Profile",
+                endIcon = R.drawable.right_icon
+            )
+            SwipefyOptionsCard(
+                leadingIcon = R.drawable.log_out,
+                option = "Log Out",
+                endIcon = null
+            )
         }
     }
 }
@@ -159,7 +173,7 @@ fun StatusBarColor() {
         onDispose {
             systemUiController.setStatusBarColor(
                 color = Color.Black,
-                darkIcons = true
+                darkIcons = false
             )
         }
     }

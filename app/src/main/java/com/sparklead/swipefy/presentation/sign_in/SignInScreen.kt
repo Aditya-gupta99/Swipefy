@@ -125,7 +125,7 @@ fun SignInScreen(navController: NavController) {
                 signInViewModel.onValidate(SignInValidationEvent.PasswordChanged(it))
             }
             Spacer(modifier = Modifier.height(200.dp))
-            GradiantButton(value = "Register") {
+            GradiantButton(value = "Login") {
                 signInViewModel.onValidate(SignInValidationEvent.Login)
             }
             Spacer(modifier = Modifier.height(40.dp))
