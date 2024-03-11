@@ -1,7 +1,7 @@
 package com.sparklead.swipefy.data.service
 
-import com.sparklead.swipefy.data.dto.randomTrack.RandomTrackDto
-import com.sparklead.swipefy.data.dto.track.TrackDto
+import com.sparklead.core.data.dto.randomTrack.RandomTrackDto
+import com.sparklead.core.data.dto.track.TrackDto
 
 interface SpotifyService {
 

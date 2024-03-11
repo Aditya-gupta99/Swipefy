@@ -1,8 +1,9 @@
 package com.sparklead.datastore.di
 
-import com.sparklead.datastore.model.ArtistDb
-import com.sparklead.datastore.model.SongDb
+import com.sparklead.core.data.model_db.ArtistDb
+import com.sparklead.core.data.model_db.SongDb
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.realm.kotlin.Realm
@@ -12,6 +13,7 @@ import io.realm.kotlin.RealmConfiguration
 @InstallIn(SingletonComponent::class)
 object DatastoreModule {
 
+    @Provides
     fun providesRealm(): Realm {
         val config = RealmConfiguration.Builder(
             schema = setOf(

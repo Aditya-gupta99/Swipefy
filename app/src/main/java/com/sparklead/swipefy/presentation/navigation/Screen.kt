@@ -14,9 +14,9 @@ sealed class Screen(
 
     object HomeScreen : Screen(route = "home_screen", title = "Home", icon = R.drawable.ic_home)
 
-    object SongListScreen :
-        Screen(route = "song_list_screen", title = "Songs", icon = R.drawable.ic_song)
+    object SongListScreen : Screen(route = "song_list_screen", title = "Songs", icon = R.drawable.ic_song)
 
-    object ProfileScreen :
-        Screen(route = "profile_screen", title = "Profile", R.drawable.ic_profile)
+    object ProfileScreen : Screen(route = "profile_screen", title = "Profile", R.drawable.ic_profile)
+
+    object DownloadSongScreen : Screen(route = "download_screen", title = "Download", R.drawable.ic_profile)
 }

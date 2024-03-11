@@ -22,8 +22,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.sparklead.swipefy.domain.model.Artist
-import com.sparklead.swipefy.domain.model.Song
+import com.sparklead.core.data.model.Artist
+import com.sparklead.core.data.model.Song
 import com.sparklead.swipefy.presentation.components.HeadingTextView
 import com.sparklead.swipefy.presentation.components.SwipefyLoadingProgress
 import com.sparklead.swipefy.presentation.components.SwipefyMiniPlayer
@@ -45,7 +45,12 @@ fun SongListScreen(navController: NavController, padding: PaddingValues) {
                 duration = 300,
                 previewUrl = "https://p.scdn.co/mp3-preview/7908c3512a17427dbb2747fda555aa84aedeef0d?cid=d8a5ed958d274c2e8ee717e6a4b0971d",
                 imageUrl = "https://i.scdn.co/image/ab67616d0000b273021d7017f73387b008eab271",
-                artist = listOf(Artist(id = "4YRxDV8wJFPHPTeXepOstw", name = "Arijit Singh"))
+                artist = listOf(
+                    Artist(
+                        id = "4YRxDV8wJFPHPTeXepOstw",
+                        name = "Arijit Singh"
+                    )
+                )
             )
         )
     }
@@ -61,7 +66,11 @@ fun SongListScreen(navController: NavController, padding: PaddingValues) {
             )
         },
         bottomBar = {
-            SwipefyMiniPlayer(miniPlayerSong.value)
+            SwipefyMiniPlayer(
+                miniPlayerSong.value,
+                download = { songListViewModel.downloadSong(it) },
+                play = {}
+            )
         },
         containerColor = Black
     ) {

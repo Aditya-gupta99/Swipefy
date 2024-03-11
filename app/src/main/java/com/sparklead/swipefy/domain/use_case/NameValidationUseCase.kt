@@ -1,6 +1,6 @@
 package com.sparklead.swipefy.domain.use_case
 
-import com.sparklead.swipefy.domain.model.ValidationResult
+import com.sparklead.core.data.model.ValidationResult
 
 class NameValidationUseCase {
 

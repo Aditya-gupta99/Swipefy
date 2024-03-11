@@ -1,7 +1,7 @@
 package com.sparklead.swipefy.domain.use_case
 
 import com.sparklead.swipefy.common.Resource
-import com.sparklead.swipefy.data.dto.track.TrackDto
+import com.sparklead.core.data.dto.track.TrackDto
 import com.sparklead.swipefy.domain.repository.TrackRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

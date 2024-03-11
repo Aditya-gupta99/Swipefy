@@ -1,7 +1,7 @@
 package com.sparklead.swipefy.domain.use_case
 
 import android.util.Patterns
-import com.sparklead.swipefy.domain.model.ValidationResult
+import com.sparklead.core.data.model.ValidationResult
 
 class EmailValidationUseCase {
 

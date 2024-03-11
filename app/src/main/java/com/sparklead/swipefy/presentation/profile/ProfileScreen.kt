@@ -44,6 +44,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.sparklead.swipefy.R
 import com.sparklead.swipefy.presentation.components.ProfileTextField
 import com.sparklead.swipefy.presentation.components.SwipefyOptionsCard
+import com.sparklead.swipefy.presentation.navigation.Screen
 
 @Composable
 fun ProfileScreen(navController: NavController, padding: PaddingValues) {
@@ -148,17 +149,23 @@ fun ProfileScreen(navController: NavController, padding: PaddingValues) {
                 leadingIcon = R.drawable.download,
                 option = "Download",
                 endIcon = R.drawable.right_icon
-            )
+            ) {
+                navController.navigate(Screen.DownloadSongScreen.route)
+            }
             SwipefyOptionsCard(
                 leadingIcon = R.drawable.edit_icon,
                 option = "Edit Profile",
                 endIcon = R.drawable.right_icon
-            )
+            ) {
+
+            }
             SwipefyOptionsCard(
                 leadingIcon = R.drawable.log_out,
                 option = "Log Out",
                 endIcon = null
-            )
+            ) {
+
+            }
         }
     }
 }

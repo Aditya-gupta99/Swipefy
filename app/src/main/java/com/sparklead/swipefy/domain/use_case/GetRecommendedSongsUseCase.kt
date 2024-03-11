@@ -1,7 +1,7 @@
 package com.sparklead.swipefy.domain.use_case
 
 import androidx.paging.PagingData
-import com.sparklead.swipefy.domain.model.Song
+import com.sparklead.core.data.model.Song
 import com.sparklead.swipefy.domain.repository.SongListRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

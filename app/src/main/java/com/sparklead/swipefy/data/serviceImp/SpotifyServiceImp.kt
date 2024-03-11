@@ -3,8 +3,8 @@ package com.sparklead.swipefy.data.serviceImp
 import android.util.Log
 import com.sparklead.swipefy.BuildConfig
 import com.sparklead.swipefy.common.Constants
-import com.sparklead.swipefy.data.dto.randomTrack.RandomTrackDto
-import com.sparklead.swipefy.data.dto.track.TrackDto
+import com.sparklead.core.data.dto.randomTrack.RandomTrackDto
+import com.sparklead.core.data.dto.track.TrackDto
 import com.sparklead.swipefy.data.remote.HttpRoutes
 import com.sparklead.swipefy.data.service.SpotifyService
 import io.ktor.client.HttpClient

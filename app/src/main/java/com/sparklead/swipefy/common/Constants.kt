@@ -1,8 +1,8 @@
 package com.sparklead.swipefy.common
 
-import com.sparklead.swipefy.data.dto.randomTrack.RandomTrackDto
-import com.sparklead.swipefy.domain.model.Artist
-import com.sparklead.swipefy.domain.model.SwipeSong
+import com.sparklead.core.data.dto.randomTrack.RandomTrackDto
+import com.sparklead.core.data.model.Artist
+import com.sparklead.core.data.model.SwipeSong
 
 object Constants {
 
@@ -27,7 +27,7 @@ object Constants {
                         id = it.id,
                         name = it.name,
                         duration = it.duration_ms,
-                        previewUrl = it.preview_url,
+                        previewUrl = it.preview_url!!,
                         imageUrl = it.album.images[0].url,
                         artist = it.artists.map { artistX ->
                             Artist(
