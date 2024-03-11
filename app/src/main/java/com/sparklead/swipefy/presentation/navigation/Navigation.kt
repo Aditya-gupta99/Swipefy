@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.sparklead.swipefy.presentation.download.DownloadSongScreen
 import com.sparklead.swipefy.presentation.home.HomeScreen
 import com.sparklead.swipefy.presentation.profile.ProfileScreen
 import com.sparklead.swipefy.presentation.sign_in.SignInScreen
@@ -29,6 +30,9 @@ fun Navigation(navController: NavHostController, padding: PaddingValues) {
         }
         composable(Screen.ProfileScreen.route) {
             ProfileScreen(navController,padding)
+        }
+        composable(Screen.DownloadSongScreen.route) {
+            DownloadSongScreen(navController,padding)
         }
     }
 }

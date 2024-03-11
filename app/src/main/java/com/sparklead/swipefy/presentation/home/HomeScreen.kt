@@ -34,7 +34,7 @@ import androidx.media3.common.MediaItem
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sparklead.swipefy.R
-import com.sparklead.swipefy.domain.model.SwipeSong
+import com.sparklead.core.data.model.SwipeSong
 import com.sparklead.swipefy.presentation.components.CircularIconButton
 import com.sparklead.swipefy.presentation.components.LeftAlignHeadingText
 import com.sparklead.swipefy.presentation.components.LeftAlignNormalText
@@ -49,7 +49,7 @@ fun HomeScreen(navController: NavController, padding: PaddingValues) {
     val homeViewModel: HomeViewModel = hiltViewModel()
     val state = homeViewModel.homeUiState.collectAsState().value
 
-    var songList = rememberSaveable { listOf<SwipeSong>() }
+    var songList = rememberSaveable { listOf<com.sparklead.core.data.model.SwipeSong>() }
     val currentIndex = rememberSaveable { mutableIntStateOf(0) }
 
 

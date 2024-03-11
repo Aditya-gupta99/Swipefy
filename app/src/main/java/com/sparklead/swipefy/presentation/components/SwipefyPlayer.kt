@@ -21,13 +21,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sparklead.swipefy.R
-import com.sparklead.swipefy.domain.model.Song
+import com.sparklead.core.data.model.Song
 import com.sparklead.swipefy.presentation.theme.DarkGrey
 import com.sparklead.swipefy.presentation.theme.Grey
 
 @Composable
-fun SwipefyMiniPlayer(song: Song) {
-
+fun SwipefyMiniPlayer(
+    song: com.sparklead.core.data.model.Song,
+    download: (com.sparklead.core.data.model.Song) -> Unit,
+    play: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -63,10 +66,12 @@ fun SwipefyMiniPlayer(song: Song) {
                     fontWeight = FontWeight.Light
                 )
             }
-            Row(modifier = Modifier
-                .weight(1f)
-                .padding(end = 8.dp)) {
-                IconButton(onClick = {}) {
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp)
+            ) {
+                IconButton(onClick = { download(song) }) {
                     AsyncImage(
                         modifier = Modifier.size(25.dp),
                         model = R.drawable.download,
@@ -74,7 +79,7 @@ fun SwipefyMiniPlayer(song: Song) {
                         colorFilter = ColorFilter.tint(Color.White)
                     )
                 }
-                IconButton(onClick = {}) {
+                IconButton(onClick = { play() }) {
                     AsyncImage(
                         modifier = Modifier.size(23.dp),
                         model = R.drawable.play,

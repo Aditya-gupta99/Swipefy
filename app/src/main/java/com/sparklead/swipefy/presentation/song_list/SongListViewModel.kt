@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.sparklead.swipefy.domain.model.Song
+import com.sparklead.core.data.model.Song
+import com.sparklead.swipefy.domain.use_case.DownloadSongUseCase
 import com.sparklead.swipefy.domain.use_case.GetRecommendedSongsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SongListViewModel @Inject constructor(
-    private val getRecommendedSongsUseCase: GetRecommendedSongsUseCase
+    private val getRecommendedSongsUseCase: GetRecommendedSongsUseCase,
+    private val downloadSongUseCase: DownloadSongUseCase
 ) : ViewModel() {
 
     init {
@@ -34,5 +36,9 @@ class SongListViewModel @Inject constructor(
             .collect {
                 _songListUiState.value = it
             }
+    }
+
+    fun downloadSong(song: Song) = viewModelScope.launch {
+        downloadSongUseCase(song)
     }
 }

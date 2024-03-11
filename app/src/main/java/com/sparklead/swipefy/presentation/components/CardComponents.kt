@@ -39,8 +39,8 @@ import com.pratyush.swipeablecard.ExperimentalSwipeGestureApi
 import com.pratyush.swipeablecard.enums.Direction
 import com.pratyush.swipeablecard.swipeableCard
 import com.sparklead.swipefy.R
-import com.sparklead.swipefy.domain.model.Song
-import com.sparklead.swipefy.domain.model.SwipeSong
+import com.sparklead.core.data.model.Song
+import com.sparklead.core.data.model.SwipeSong
 import com.sparklead.swipefy.presentation.theme.Black
 import com.sparklead.swipefy.presentation.theme.DarkGreen
 import com.sparklead.swipefy.presentation.theme.DarkGrey
@@ -73,7 +73,7 @@ fun SmallIconButton(image: ImageVector) {
 
 @Composable
 fun SwipeCard(
-    songList: List<SwipeSong>,
+    songList: List<com.sparklead.core.data.model.SwipeSong>,
     currentIndex: MutableIntState,
     cardSwipe: () -> Unit,
     progress: Float,
@@ -113,7 +113,7 @@ fun SwipeCard(
 @OptIn(ExperimentalSwipeGestureApi::class)
 @Composable
 fun SongCard(
-    profile: SwipeSong,
+    profile: com.sparklead.core.data.model.SwipeSong,
     modifier: Modifier = Modifier,
     onSlideChange: (Float) -> Unit,
     progress: Float,
@@ -219,11 +219,11 @@ fun SwipefyRecommendedSongCard(song: Song, onSongSelected: (Song) -> Unit) {
 }
 
 @Composable
-fun SwipefyOptionsCard(leadingIcon: Int, option: String, endIcon: Int?) {
+fun SwipefyOptionsCard(leadingIcon: Int, option: String, endIcon: Int?,onSelect : ()->Unit) {
 
     Card(
         modifier = Modifier.clickable(onClick = {
-
+            onSelect()
         }),
         shape = RoundedCornerShape(4.dp),
         colors = CardDefaults.cardColors(Black)

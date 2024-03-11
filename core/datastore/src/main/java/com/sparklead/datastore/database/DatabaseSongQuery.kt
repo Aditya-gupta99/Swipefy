@@ -1,6 +1,8 @@
 package com.sparklead.datastore.database
 
-import com.sparklead.datastore.model.SongDb
+import com.sparklead.core.data.mapper.toSong
+import com.sparklead.core.data.model.Song
+import com.sparklead.core.data.model_db.SongDb
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.Flow
@@ -15,8 +17,9 @@ class DatabaseSongQuery @Inject constructor(private val realm: Realm) {
         }
     }
 
-    fun getSongFromDb(): Flow<List<SongDb>> {
-        return realm.query<SongDb>().asFlow().map { it.list.toList() }
+    fun getSongFromDb(): Flow<List<Song>> {
+        return realm.query<SongDb>().asFlow()
+            .map { it.list.map { clientDb -> clientDb.toSong() }.toList() }
     }
 
 }
