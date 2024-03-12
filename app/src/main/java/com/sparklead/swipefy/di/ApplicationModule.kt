@@ -7,6 +7,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.sparklead.swipefy.data.service.SpotifyService
 import com.sparklead.swipefy.data.serviceImp.SpotifyServiceImp
 import com.sparklead.swipefy.presentation.exoplayer.ExoServiceHandler
@@ -33,6 +34,9 @@ object ApplicationModule {
     @Provides
     @Singleton
     fun providesFirebaseAuth() = FirebaseAuth.getInstance()
+
+    @Provides
+    fun providesFirebaseFirestore() = FirebaseFirestore.getInstance()
 
     @Provides
     @Singleton

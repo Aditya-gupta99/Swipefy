@@ -2,6 +2,7 @@ package com.sparklead.datastore.di
 
 import com.sparklead.core.data.model_db.ArtistDb
 import com.sparklead.core.data.model_db.SongDb
+import com.sparklead.core.data.model_db.UserDb
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,8 @@ object DatastoreModule {
         val config = RealmConfiguration.Builder(
             schema = setOf(
                 SongDb::class,
-                ArtistDb::class
+                ArtistDb::class,
+                UserDb::class
             )
         ).compactOnLaunch().build()
         return Realm.open(config)

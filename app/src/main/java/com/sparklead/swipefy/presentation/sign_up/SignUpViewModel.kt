@@ -5,11 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sparklead.core.data.model.User
 import com.sparklead.swipefy.common.Resource
 import com.sparklead.swipefy.domain.use_case.ConfirmPasswordValidationUseCase
 import com.sparklead.swipefy.domain.use_case.EmailValidationUseCase
 import com.sparklead.swipefy.domain.use_case.NameValidationUseCase
 import com.sparklead.swipefy.domain.use_case.PasswordValidationUseCase
+import com.sparklead.swipefy.domain.use_case.SaveUserToFirebaseUseCase
+import com.sparklead.swipefy.domain.use_case.SaveUserToLocalDbUseCase
 import com.sparklead.swipefy.domain.use_case.SignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +27,9 @@ class SignUpViewModel @Inject constructor(
     private val nameValidationUseCase: NameValidationUseCase,
     private val emailValidationUseCase: EmailValidationUseCase,
     private val passwordValidationUseCase: PasswordValidationUseCase,
-    private val confirmPasswordValidationUseCase: ConfirmPasswordValidationUseCase
+    private val confirmPasswordValidationUseCase: ConfirmPasswordValidationUseCase,
+    private val saveUserToFirebaseUseCase: SaveUserToFirebaseUseCase,
+    private val saveUserToLocalDbUseCase: SaveUserToLocalDbUseCase
 ) : ViewModel() {
 
     private val _signUpUiState = MutableStateFlow<SignUpUiState>(SignUpUiState.Empty)
@@ -82,22 +87,55 @@ class SignUpViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
-            signUpUser(validationState.email, validationState.password)
+            signUpUser(validationState.name, validationState.email, validationState.password)
         }
     }
 
-    private fun signUpUser(email: String, password: String) =
+    private fun signUpUser(username: String, email: String, password: String) =
         viewModelScope.launch(Dispatchers.IO) {
-            _signUpUiState.value = SignUpUiState.Loading
             useCase(email, password).collect { result ->
                 when (result) {
                     is Resource.Error -> _signUpUiState.value =
                         SignUpUiState.Error(result.message ?: "An unexpected error occurred")
 
                     is Resource.Loading -> _signUpUiState.value = SignUpUiState.Loading
-                    is Resource.Success -> _signUpUiState.value =
-                        SignUpUiState.Success(result.data?.user?.uid ?: "")
+                    is Resource.Success -> result.data?.user?.let {
+                        saveUserToDatabase(
+                            it.uid,
+                            username,
+                            email
+                        )
+                    }
                 }
             }
         }
+
+    private fun saveUserToDatabase(id: String, username: String, email: String) =
+        viewModelScope.launch(Dispatchers.IO) {
+            saveUserToFirebaseUseCase(id, username, email).collect { result ->
+                when (result) {
+                    is Resource.Error -> {
+                        SignUpUiState.Error(result.message ?: "An unexpected error occurred")
+                    }
+
+                    is Resource.Loading -> {
+
+                    }
+
+                    is Resource.Success -> {
+//                        _signUpUiState.value = SignUpUiState.Success()
+                        result.data?.let { saveUserToLocalDb(it) }
+                    }
+                }
+            }
+        }
+
+    private fun saveUserToLocalDb(user: User) = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            saveUserToLocalDbUseCase(user)
+            _signUpUiState.value = SignUpUiState.Success
+        } catch (e : Exception) {
+            _signUpUiState.value = SignUpUiState.Error(e.message.toString())
+        }
+    }
 }
