@@ -47,7 +47,7 @@ dependencies {
 
     // Mongo Realm
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-    implementation("io.realm.kotlin:library-base:1.11.0")
+    implementation("io.realm.kotlin:library-base:1.14.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 }

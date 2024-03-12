@@ -157,5 +157,8 @@ dependencies {
 
     // Mongo Realm
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-    implementation("io.realm.kotlin:library-base:1.11.0")
+    implementation("io.realm.kotlin:library-base:1.14.0")
+
+    // firestore
+    implementation("com.google.firebase:firebase-firestore:24.10.3")
 }
