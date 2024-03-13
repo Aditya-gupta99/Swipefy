@@ -1,5 +1,9 @@
 package com.sparklead.core.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class User(
 
     val id: String,
@@ -11,4 +15,4 @@ data class User(
     val email: String,
 
     val image: String?,
-)
+) : Parcelable

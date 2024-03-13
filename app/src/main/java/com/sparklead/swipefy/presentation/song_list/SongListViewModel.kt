@@ -25,7 +25,7 @@ class SongListViewModel @Inject constructor(
     }
 
     private val _songListUiState = MutableStateFlow<PagingData<Song>>(PagingData.empty())
-    val songListUiState = _songListUiState.asStateFlow()
+    val songListUiState = _songListUiState.asStateFlow().cachedIn(viewModelScope)
 
     fun getFavoriteArtist() {
         getRecommendedSongs()

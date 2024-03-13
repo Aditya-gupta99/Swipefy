@@ -19,22 +19,20 @@ import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.media3.common.MediaItem
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.sparklead.swipefy.R
 import com.sparklead.core.data.model.SwipeSong
+import com.sparklead.core.data.model.User
+import com.sparklead.swipefy.R
 import com.sparklead.swipefy.presentation.components.CircularIconButton
 import com.sparklead.swipefy.presentation.components.LeftAlignHeadingText
 import com.sparklead.swipefy.presentation.components.LeftAlignNormalText
@@ -48,8 +46,9 @@ fun HomeScreen(navController: NavController, padding: PaddingValues) {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
     val state = homeViewModel.homeUiState.collectAsState().value
+    val user = rememberSaveable { mutableStateOf<User?>(null) }
 
-    var songList = rememberSaveable { listOf<com.sparklead.core.data.model.SwipeSong>() }
+    var songList = rememberSaveable { listOf<SwipeSong>() }
     val currentIndex = rememberSaveable { mutableIntStateOf(0) }
 
 
@@ -74,6 +73,10 @@ fun HomeScreen(navController: NavController, padding: PaddingValues) {
         is HomeUiState.RandomSongSuccess -> {
             songList = state.list
         }
+
+        is HomeUiState.UserSuccess -> {
+            user.value = state.user
+        }
     }
 
     Scaffold(
@@ -87,7 +90,7 @@ fun HomeScreen(navController: NavController, padding: PaddingValues) {
                 Column(modifier = Modifier.weight(2f)) {
                     LeftAlignNormalText(value = stringResource(id = R.string.welcome_back))
                     Spacer(modifier = Modifier.height(6.dp))
-                    LeftAlignHeadingText(value = "Ankur Singh")
+                    user.value?.let { it1 -> LeftAlignHeadingText(value = it1.username) }
                 }
                 SmallIconButton(image = Icons.Outlined.Notifications)
             }

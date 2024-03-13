@@ -4,6 +4,7 @@ plugins {
     id("io.realm.kotlin")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {

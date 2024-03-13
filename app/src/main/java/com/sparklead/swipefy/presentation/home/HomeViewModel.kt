@@ -13,6 +13,7 @@ import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import androidx.media3.common.MediaItem
 import com.sparklead.swipefy.common.Resource
+import com.sparklead.swipefy.domain.use_case.GetUserFromLocalDbUseCase
 import com.sparklead.swipefy.domain.use_case.RandomTracksUseCase
 import com.sparklead.swipefy.domain.use_case.TrackUseCase
 import com.sparklead.swipefy.presentation.exoplayer.ExoAudioState
@@ -31,6 +32,7 @@ class HomeViewModel @Inject constructor(
     private val useCase: TrackUseCase,
     private val randomTracksUseCase: RandomTracksUseCase,
     private val exoServiceHandler: ExoServiceHandler,
+    private val getUserToLocalDbUseCase: GetUserFromLocalDbUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -63,7 +65,7 @@ class HomeViewModel @Inject constructor(
     var currentSong by savedStateHandle.saveable { mutableStateOf<MediaItem>(MediaItem.fromUri(Uri.EMPTY)) }
 
     init {
-
+        getUserFromLocalDb()
         getRandomSongs(getUserGenre())
 
         viewModelScope.launch {
@@ -135,5 +137,21 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
+    }
+
+    private fun getUserFromLocalDb() = viewModelScope.launch(Dispatchers.IO) {
+        getUserToLocalDbUseCase().collect { result->
+            when(result) {
+                is Resource.Error -> {
+
+                }
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success -> {
+                    _homeUiState.value = HomeUiState.UserSuccess(result.data)
+                }
+            }
+        }
     }
 }

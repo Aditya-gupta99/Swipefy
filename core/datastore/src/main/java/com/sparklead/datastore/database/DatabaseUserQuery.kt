@@ -19,4 +19,8 @@ class DatabaseUserQuery @Inject constructor(private val realm: Realm) {
         }
     }
 
+    fun getUserFromDb(): UserDb? {
+        return realm.query<UserDb>().first().find()
+    }
+
 }
