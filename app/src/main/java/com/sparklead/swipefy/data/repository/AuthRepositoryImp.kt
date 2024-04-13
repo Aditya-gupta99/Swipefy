@@ -16,4 +16,8 @@ class AuthRepositoryImp @Inject constructor(private val firebaseAuth: FirebaseAu
     override suspend fun signInUser(email: String, password: String): AuthResult {
         return firebaseAuth.signInWithEmailAndPassword(email, password).await()
     }
+
+    override suspend fun signOutUser() {
+        firebaseAuth.signOut()
+    }
 }

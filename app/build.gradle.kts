@@ -161,4 +161,7 @@ dependencies {
 
     // firestore
     implementation("com.google.firebase:firebase-firestore:24.10.3")
+
+    // lifecycle compose
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
 }

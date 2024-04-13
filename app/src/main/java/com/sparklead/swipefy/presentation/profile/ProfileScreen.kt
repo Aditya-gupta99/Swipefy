@@ -38,6 +38,8 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -49,7 +51,17 @@ import com.sparklead.swipefy.presentation.navigation.Screen
 @Composable
 fun ProfileScreen(navController: NavController, padding: PaddingValues) {
 
+    val profileViewModel: ProfileViewModel = hiltViewModel()
     val imageUri = rememberSaveable { mutableStateOf("") }
+    val state = profileViewModel.profileUiState.collectAsStateWithLifecycle().value
+
+
+    when (state) {
+        ProfileUiState.Loading -> {
+
+        }
+    }
+
     val painter = rememberAsyncImagePainter(
         if (imageUri.value.isEmpty())
             R.drawable.profile_icon
@@ -164,7 +176,13 @@ fun ProfileScreen(navController: NavController, padding: PaddingValues) {
                 option = "Log Out",
                 endIcon = null
             ) {
-
+                profileViewModel.logout().also {
+                    navController.navigate(Screen.SignInScreen.route) {
+                        popUpTo(Screen.HomeScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                }
             }
         }
     }
