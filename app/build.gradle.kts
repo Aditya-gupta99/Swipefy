@@ -93,6 +93,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     //HILT
     implementation("com.google.dagger:hilt-android:2.48")
@@ -148,8 +149,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 
     //exoplayer dependency
-    implementation("androidx.media3:media3-exoplayer:1.2.0")
-    implementation("androidx.media3:media3-ui:1.2.0")
+    implementation("androidx.media3:media3-exoplayer:1.3.1")
+    implementation("androidx.media3:media3-ui:1.3.1")
+    implementation("androidx.media3:media3-common:1.3.1")
+    implementation("androidx.media3:media3-session:1.3.1")
 
     // paging 3
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
@@ -164,4 +167,8 @@ dependencies {
 
     // lifecycle compose
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+
+    // glide loader
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
 }

@@ -19,7 +19,7 @@ import com.sparklead.swipefy.presentation.navigation.Screen
 import com.sparklead.swipefy.presentation.theme.Black
 
 @Composable
-fun SwipefyApp() {
+fun SwipefyApp(startMusicService: ()->Unit) {
 
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -52,6 +52,8 @@ fun SwipefyApp() {
             }
         }
     ) {
-        Navigation(navController = navController, padding = it)
+        Navigation(navController = navController, padding = it) {
+            startMusicService()
+        }
     }
 }

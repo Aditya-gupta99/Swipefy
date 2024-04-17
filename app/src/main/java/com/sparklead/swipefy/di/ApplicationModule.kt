@@ -6,11 +6,13 @@ import androidx.media3.common.C
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
+import androidx.media3.session.MediaSession
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sparklead.swipefy.data.service.SpotifyService
 import com.sparklead.swipefy.data.serviceImp.SpotifyServiceImp
 import com.sparklead.swipefy.presentation.exoplayer.ExoServiceHandler
+import com.sparklead.swipefy.presentation.exoplayer.notification.MusicNotificationManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -83,6 +85,21 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun providesServiceHandler(exoPlayer: ExoPlayer): ExoServiceHandler =
-        ExoServiceHandler(exoPlayer)
+    fun provideNotificationManager(
+        @ApplicationContext context: Context,
+        player: ExoPlayer
+    ): MusicNotificationManager =
+        MusicNotificationManager(
+            context = context,
+            player = player
+        )
+
+    @Provides
+    @Singleton
+    fun provideMediaSession(
+        @ApplicationContext context: Context,
+        player: ExoPlayer
+    ): MediaSession =
+        MediaSession.Builder(context, player).build()
+
 }
