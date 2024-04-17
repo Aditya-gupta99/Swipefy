@@ -9,6 +9,10 @@ object Constants {
     const val API_KEY = "X-RapidAPI-Key"
     const val API_HOST = "X-RapidAPI-Host"
 
+    const val NOW_PLAYING_CHANNEL_ID = "channel 1"
+    const val NOW_PLAYING_NOTIFICATION_ID = 10
+    const val NOTIFICATION_CHANNEL_NAME = "Swipefy"
+
     private val fullScreenRoutes = listOf(
         "sign_up_screen",
         "sign_in_screen"

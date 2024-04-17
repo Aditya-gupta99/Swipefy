@@ -1,5 +1,10 @@
 package com.sparklead.core.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
+
+@Parcelize
 data class SwipeSong(
 
     val id: String,
@@ -13,4 +18,4 @@ data class SwipeSong(
     val imageUrl: String,
 
     val artist: List<Artist>
-)
+) : Parcelable

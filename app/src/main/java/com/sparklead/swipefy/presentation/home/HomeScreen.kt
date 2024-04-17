@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -46,10 +47,10 @@ fun HomeScreen(navController: NavController, padding: PaddingValues) {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
     val state = homeViewModel.homeUiState.collectAsState().value
-    val user = rememberSaveable { mutableStateOf<User?>(null) }
+    val user = remember { mutableStateOf<User?>(null) }
 
-    var songList = rememberSaveable { listOf<SwipeSong>() }
-    val currentIndex = rememberSaveable { mutableIntStateOf(0) }
+    var songList = remember { listOf<SwipeSong>() }
+    val currentIndex = remember { mutableIntStateOf(0) }
 
 
     when (state) {
@@ -103,7 +104,7 @@ fun HomeScreen(navController: NavController, padding: PaddingValues) {
                 cardSwipe = {
                     homeViewModel.onUiEvents(HomeUiEvent.PlayPause)
                     homeViewModel.currentSong =
-                        MediaItem.fromUri(Uri.parse(songList[currentIndex.intValue].previewUrl))
+                        MediaItem.fromUri(Uri.parse("https://p.scdn.co/mp3-preview/7908c3512a17427dbb2747fda555aa84aedeef0d?cid=d8a5ed958d274c2e8ee717e6a4b0971d"))
                     homeViewModel.onUiEvents(HomeUiEvent.SelectedMediaChange)
                 })
             Spacer(modifier = Modifier.height(10.dp))
@@ -117,7 +118,7 @@ fun HomeScreen(navController: NavController, padding: PaddingValues) {
                 CircularIconButton(image = Icons.Filled.Pause) {
                     homeViewModel.onUiEvents(HomeUiEvent.PlayPause)
                     homeViewModel.currentSong =
-                        MediaItem.fromUri(Uri.parse(songList[currentIndex.intValue].previewUrl))
+                        MediaItem.fromUri(Uri.parse("https://p.scdn.co/mp3-preview/7908c3512a17427dbb2747fda555aa84aedeef0d?cid=d8a5ed958d274c2e8ee717e6a4b0971d"))
                     homeViewModel.onUiEvents(HomeUiEvent.SelectedMediaChange)
                 }
                 CircularIconButton(image = Icons.Filled.FavoriteBorder) {

@@ -3,9 +3,11 @@
 package com.sparklead.swipefy.presentation.home
 
 import android.net.Uri
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -62,7 +64,7 @@ class HomeViewModel @Inject constructor(
     var duration by savedStateHandle.saveable { mutableLongStateOf(29000L) }
     var progress by savedStateHandle.saveable { mutableFloatStateOf(0f) }
     var isPlaying by savedStateHandle.saveable { mutableStateOf(false) }
-    var currentSong by savedStateHandle.saveable { mutableStateOf<MediaItem>(MediaItem.fromUri(Uri.EMPTY)) }
+    var currentSong by  mutableStateOf<MediaItem>(MediaItem.fromUri(Uri.EMPTY))
 
     init {
         getUserFromLocalDb()

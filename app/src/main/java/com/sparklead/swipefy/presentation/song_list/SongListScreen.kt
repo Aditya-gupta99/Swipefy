@@ -15,7 +15,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -34,7 +33,11 @@ import com.sparklead.swipefy.presentation.components.SwipefySweetError
 import com.sparklead.swipefy.presentation.theme.Black
 
 @Composable
-fun SongListScreen(navController: NavController, padding: PaddingValues) {
+fun SongListScreen(
+    navController: NavController,
+    padding: PaddingValues,
+    startMusicService: () -> Unit
+) {
 
     val songListViewModel: SongListViewModel = hiltViewModel()
     val songPagingItems = songListViewModel.songListUiState.collectAsLazyPagingItems()
@@ -70,7 +73,10 @@ fun SongListScreen(navController: NavController, padding: PaddingValues) {
             SwipefyMiniPlayer(
                 miniPlayerSong.value,
                 download = { songListViewModel.downloadSong(it) },
-                play = {}
+                play = {
+                    songListViewModel.onStart()
+                    startMusicService()
+                }
             )
         },
         containerColor = Black
