@@ -48,9 +48,8 @@ class MusicNotificationManager(
             .build()
             .also {
                 it.setMediaSessionToken(mediaSession.sessionCompatToken)
-                it.setUseFastForwardActionInCompactView(true)
-                it.setUseRewindActionInCompactView(true)
-                it.setUseNextActionInCompactView(false)
+                it.setUseNextActionInCompactView(true)
+                it.setUsePreviousActionInCompactView(true)
                 it.setPriority(NotificationCompat.PRIORITY_LOW)
                 it.setPlayer(player)
             }

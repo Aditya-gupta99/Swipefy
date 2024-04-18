@@ -15,7 +15,7 @@ import com.sparklead.swipefy.presentation.song_list.SongListScreen
 @Composable
 fun Navigation(navController: NavHostController, padding: PaddingValues,startMusicService: ()->Unit) {
 
-    NavHost(navController = navController, startDestination = Screen.SongListScreen.route) {
+    NavHost(navController = navController, startDestination = Screen.HomeScreen.route) {
         composable(Screen.SignUpScreen.route) {
             SignUpScreen(navController)
         }
