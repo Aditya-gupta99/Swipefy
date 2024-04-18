@@ -14,6 +14,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
+import com.sparklead.core.data.model.SwipeSong
 import com.sparklead.swipefy.common.Resource
 import com.sparklead.swipefy.domain.use_case.GetUserFromLocalDbUseCase
 import com.sparklead.swipefy.domain.use_case.RandomTracksUseCase
@@ -61,10 +63,10 @@ class HomeViewModel @Inject constructor(
 
 
     //audio
-    var duration by savedStateHandle.saveable { mutableLongStateOf(29000L) }
+    private var duration by savedStateHandle.saveable { mutableLongStateOf(29000L) }
     var progress by savedStateHandle.saveable { mutableFloatStateOf(0f) }
     var isPlaying by savedStateHandle.saveable { mutableStateOf(false) }
-    var currentSong by  mutableStateOf<MediaItem>(MediaItem.fromUri(Uri.EMPTY))
+    var currentSong by mutableStateOf<SwipeSong?>(null)
 
     init {
         getUserFromLocalDb()
@@ -108,9 +110,23 @@ class HomeViewModel @Inject constructor(
             }
 
             is HomeUiEvent.SelectedMediaChange -> {
-                exoServiceHandler.onPlayerEvents(ExoPlayerEvent.SelectedAudioChanged(currentSong))
+                currentSong?.let { buildMediaItem(it) }
+                    ?.let { ExoPlayerEvent.SelectedAudioChanged(it) }
+                    ?.let { exoServiceHandler.onPlayerEvents(it) }
             }
         }
+    }
+
+    private fun buildMediaItem(currentSong: SwipeSong): MediaItem {
+        return MediaItem.Builder()
+            .setUri(currentSong.previewUrl)
+            .setMediaMetadata(
+                MediaMetadata.Builder()
+                    .setArtworkUri(Uri.parse(currentSong.imageUrl))
+                    .setAlbumTitle(currentSong.name)
+                    .setDisplayTitle(currentSong.artist[0].name)
+                    .build()
+            ).build()
     }
 
     private fun calculateProgressValue(currentProgress: Long) {
@@ -142,14 +158,16 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getUserFromLocalDb() = viewModelScope.launch(Dispatchers.IO) {
-        getUserToLocalDbUseCase().collect { result->
-            when(result) {
+        getUserToLocalDbUseCase().collect { result ->
+            when (result) {
                 is Resource.Error -> {
 
                 }
+
                 is Resource.Loading -> {
 
                 }
+
                 is Resource.Success -> {
                     _homeUiState.value = HomeUiState.UserSuccess(result.data)
                 }

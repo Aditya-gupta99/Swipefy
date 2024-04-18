@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -23,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -47,10 +47,10 @@ fun HomeScreen(navController: NavController, padding: PaddingValues) {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
     val state = homeViewModel.homeUiState.collectAsState().value
-    val user = remember { mutableStateOf<User?>(null) }
+    val user = rememberSaveable { mutableStateOf<User?>(null) }
 
-    var songList = remember { listOf<SwipeSong>() }
-    val currentIndex = remember { mutableIntStateOf(0) }
+    var songList = rememberSaveable { listOf<SwipeSong>() }
+    val currentIndex = rememberSaveable { mutableIntStateOf(0) }
 
 
     when (state) {
@@ -103,8 +103,8 @@ fun HomeScreen(navController: NavController, padding: PaddingValues) {
                 progress = homeViewModel.progress,
                 cardSwipe = {
                     homeViewModel.onUiEvents(HomeUiEvent.PlayPause)
-                    homeViewModel.currentSong =
-                        MediaItem.fromUri(Uri.parse("https://p.scdn.co/mp3-preview/7908c3512a17427dbb2747fda555aa84aedeef0d?cid=d8a5ed958d274c2e8ee717e6a4b0971d"))
+                    homeViewModel.currentSong = songList[currentIndex.intValue]
+                    MediaItem.fromUri(Uri.parse("https://p.scdn.co/mp3-preview/7908c3512a17427dbb2747fda555aa84aedeef0d?cid=d8a5ed958d274c2e8ee717e6a4b0971d"))
                     homeViewModel.onUiEvents(HomeUiEvent.SelectedMediaChange)
                 })
             Spacer(modifier = Modifier.height(10.dp))
@@ -115,10 +115,9 @@ fun HomeScreen(navController: NavController, padding: PaddingValues) {
                 CircularIconButton(image = Icons.Filled.Close) {
                     //TODO add dislike feature
                 }
-                CircularIconButton(image = Icons.Filled.Pause) {
+                CircularIconButton(image = if(homeViewModel.isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow) {
                     homeViewModel.onUiEvents(HomeUiEvent.PlayPause)
-                    homeViewModel.currentSong =
-                        MediaItem.fromUri(Uri.parse("https://p.scdn.co/mp3-preview/7908c3512a17427dbb2747fda555aa84aedeef0d?cid=d8a5ed958d274c2e8ee717e6a4b0971d"))
+                    homeViewModel.currentSong = songList[currentIndex.intValue]
                     homeViewModel.onUiEvents(HomeUiEvent.SelectedMediaChange)
                 }
                 CircularIconButton(image = Icons.Filled.FavoriteBorder) {
