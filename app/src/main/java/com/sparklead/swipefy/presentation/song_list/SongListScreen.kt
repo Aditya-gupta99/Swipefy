@@ -41,6 +41,7 @@ fun SongListScreen(
 
     val songListViewModel: SongListViewModel = hiltViewModel()
     val songPagingItems = songListViewModel.songListUiState.collectAsLazyPagingItems()
+    val songIndex = rememberSaveable { mutableStateOf<Int?>(null) }
     val miniPlayerSong = rememberSaveable {
         mutableStateOf(
             Song(
@@ -74,7 +75,7 @@ fun SongListScreen(
                 miniPlayerSong.value,
                 download = { songListViewModel.downloadSong(it) },
                 play = {
-                    songListViewModel.onStart()
+                    songIndex.value?.let { songListViewModel.onPlayMusic(it) }
                     startMusicService()
                 }
             )
@@ -107,6 +108,7 @@ fun SongListScreen(
                 items(songPagingItems.itemCount) { index ->
                     songPagingItems[index]?.let { it1 ->
                         SwipefyRecommendedSongCard(song = it1) { song ->
+//                            songIndex.value = index
                             miniPlayerSong.value = song
                         }
                     }

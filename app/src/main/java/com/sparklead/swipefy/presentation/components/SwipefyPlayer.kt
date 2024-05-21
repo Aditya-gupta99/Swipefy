@@ -27,8 +27,8 @@ import com.sparklead.swipefy.presentation.theme.Grey
 
 @Composable
 fun SwipefyMiniPlayer(
-    song: com.sparklead.core.data.model.Song,
-    download: (com.sparklead.core.data.model.Song) -> Unit,
+    song: Song,
+    download: (Song) -> Unit,
     play: () -> Unit
 ) {
     Card(

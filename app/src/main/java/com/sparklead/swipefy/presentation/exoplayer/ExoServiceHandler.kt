@@ -27,6 +27,11 @@ class ExoServiceHandler @Inject constructor(private val exoPlayer: ExoPlayer) : 
         exoPlayer.prepare()
     }
 
+    private fun addMediaItems(mediaList :List<MediaItem>) {
+        exoPlayer.setMediaItems(mediaList)
+        exoPlayer.prepare()
+    }
+
     suspend fun onPlayerEvents(
         playerEvent: ExoPlayerEvent,
         seekPosition: Long = 0
