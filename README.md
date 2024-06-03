@@ -71,4 +71,4 @@ To start, ensure that you've successfully downloaded and properly configured the
 6. Build the application in your device by clicking run button.
 
 ## Show your support
-Give a ⭐️ if this project helped you!
+Give a ⭐️ if this project helped you!  
